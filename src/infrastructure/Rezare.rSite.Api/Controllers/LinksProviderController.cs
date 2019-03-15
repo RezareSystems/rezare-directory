@@ -8,7 +8,7 @@ namespace Rezare.rSite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class LinksProviderController : ControllerBase
     {
         // GET api/values
         [HttpGet]
