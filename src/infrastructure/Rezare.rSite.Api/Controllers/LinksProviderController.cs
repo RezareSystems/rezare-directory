@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Rezare.rSite.Api.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Route("api/links")]
     [ApiController]
     public class LinksProviderController : ControllerBase
     {
