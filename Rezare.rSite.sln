@@ -7,7 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E513FA3C-0FC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1B061823-AA85-4598-BDD8-0BBA06A3663C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rezare.rSite.Api", "src\Rezare.rSite.Api\Rezare.rSite.Api.csproj", "{DDF0F13E-A177-4221-B7A9-2B3D613CA0A6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{8EA5C949-A5BC-4996-83B2-8F28DBA651D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Api", "src\infrastructure\Rezare.rSite.Api\Rezare.rSite.Api.csproj", "{DDF0F13E-A177-4221-B7A9-2B3D613CA0A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,7 +26,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DDF0F13E-A177-4221-B7A9-2B3D613CA0A6} = {E513FA3C-0FC5-45EA-AB52-03E8300ACB08}
+		{DDF0F13E-A177-4221-B7A9-2B3D613CA0A6} = {8EA5C949-A5BC-4996-83B2-8F28DBA651D8}
+		{8EA5C949-A5BC-4996-83B2-8F28DBA651D8} = {E513FA3C-0FC5-45EA-AB52-03E8300ACB08}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1188FA3E-7135-4A99-AB76-85EE2C90975C}
