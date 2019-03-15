@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Rezare.rSite.Api.Controllers
 {
@@ -15,7 +14,32 @@ namespace Rezare.rSite.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var link1 = new Link
+            {
+                Uri = new Uri("https://www.2talk.co.nz/login.html"),
+                Name = "2talk",
+                Description = "The 2talk portal for managing your work phone."
+            };
+
+            var link1Json = JsonConvert.SerializeObject(link1);
+
+            var link2 = new Link
+            {
+                Uri = new Uri("https://buildmaster.rezare.co.nz/"),
+                Name = "BuildMaster",
+                Description = "Deployment system for Rezare projects."
+            };
+
+            var link2Json = JsonConvert.SerializeObject(link2);
+
+            return new[] { link1Json, link2Json };
+        }
+
+        private class Link
+        {
+            public Uri Uri { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
 
         // GET api/values/5
