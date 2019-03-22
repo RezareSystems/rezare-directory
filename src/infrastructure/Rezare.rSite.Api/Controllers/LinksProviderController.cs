@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Rezare.rSite.Api.Controllers
 {
@@ -10,9 +9,12 @@ namespace Rezare.rSite.Api.Controllers
     [ApiController]
     public class LinksProviderController : ControllerBase
     {
-        // GET api/values
+        /// <summary>
+        /// Gets a bunch of links.
+        /// </summary>
+        /// <returns>Some links.</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Link>> Get()
         {
             var link1 = new Link
             {
@@ -21,8 +23,6 @@ namespace Rezare.rSite.Api.Controllers
                 Description = "The 2talk portal for managing your work phone."
             };
 
-            var link1Json = JsonConvert.SerializeObject(link1);
-
             var link2 = new Link
             {
                 Uri = new Uri("https://buildmaster.rezare.co.nz/"),
@@ -30,12 +30,10 @@ namespace Rezare.rSite.Api.Controllers
                 Description = "Deployment system for Rezare projects."
             };
 
-            var link2Json = JsonConvert.SerializeObject(link2);
-
-            return new[] { link1Json, link2Json };
+            return new[] { link1, link2 };
         }
 
-        private class Link
+        public class Link
         {
             public Uri Uri { get; set; }
             public string Name { get; set; }
