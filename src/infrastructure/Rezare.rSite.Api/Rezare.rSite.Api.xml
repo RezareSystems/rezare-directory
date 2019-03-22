@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rezare.rSite.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Rezare.rSite.Api.Controllers.LinksProviderController.Get">
+            <summary>
+            Gets a bunch of links.
+            </summary>
+            <returns>Some links.</returns>
+        </member>
+    </members>
+</doc>
