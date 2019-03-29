@@ -15,11 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Api", "src\infrastructure\Rezare.rSite.Api\Rezare.rSite.Api.csproj", "{DDF0F13E-A177-4221-B7A9-2B3D613CA0A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rezare.rSite.Domain", "src\core\Rezare.rSite.Domain\Rezare.rSite.Domain.csproj", "{D1CC0C66-DE11-48D4-BE55-1B7BA16EF9DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Domain", "src\core\Rezare.rSite.Domain\Rezare.rSite.Domain.csproj", "{D1CC0C66-DE11-48D4-BE55-1B7BA16EF9DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{C422173E-6ABB-48E9-A1EB-8AB900F00CAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rezare.rSite.Domain.Tests", "tests\core\Rezare.rSite.Domain.Tests\Rezare.rSite.Domain.Tests.csproj", "{32A91379-7736-4621-BB82-AA3C0B651F8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Domain.Tests", "tests\core\Rezare.rSite.Domain.Tests\Rezare.rSite.Domain.Tests.csproj", "{32A91379-7736-4621-BB82-AA3C0B651F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rezare.rSite.Application", "src\core\Rezare.rSite.Application\Rezare.rSite.Application.csproj", "{BBBF3C6D-8956-49AB-A7B3-ABD888E5BDAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{32A91379-7736-4621-BB82-AA3C0B651F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32A91379-7736-4621-BB82-AA3C0B651F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32A91379-7736-4621-BB82-AA3C0B651F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBBF3C6D-8956-49AB-A7B3-ABD888E5BDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBF3C6D-8956-49AB-A7B3-ABD888E5BDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBBF3C6D-8956-49AB-A7B3-ABD888E5BDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBBF3C6D-8956-49AB-A7B3-ABD888E5BDAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{D1CC0C66-DE11-48D4-BE55-1B7BA16EF9DF} = {8C28C1E1-6DF6-4BC1-A9F7-EC4500BCCE23}
 		{C422173E-6ABB-48E9-A1EB-8AB900F00CAE} = {1B061823-AA85-4598-BDD8-0BBA06A3663C}
 		{32A91379-7736-4621-BB82-AA3C0B651F8F} = {C422173E-6ABB-48E9-A1EB-8AB900F00CAE}
+		{BBBF3C6D-8956-49AB-A7B3-ABD888E5BDAE} = {8C28C1E1-6DF6-4BC1-A9F7-EC4500BCCE23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1188FA3E-7135-4A99-AB76-85EE2C90975C}
