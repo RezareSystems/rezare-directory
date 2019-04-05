@@ -12,6 +12,9 @@ namespace Rezare.rSite.Api.Controllers
         /// <summary>
         /// Gets a bunch of links.
         /// </summary>
+        /// <remarks>
+        /// https://docs.microsoft.com/en-us/aspnet/core/web-api/action-return-types?view=aspnetcore-2.2
+        /// </remarks>
         /// <returns>Some links.</returns>
         [HttpGet]
         public ActionResult<IEnumerable<Link>> Get()
