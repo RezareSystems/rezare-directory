@@ -38,6 +38,15 @@ namespace Rezare.rSite.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(c =>
@@ -73,6 +82,7 @@ namespace Rezare.rSite.Api
 
             if (env.IsDevelopment())
             {
+                app.UseCors();
                 app.UseDeveloperExceptionPage();
             }
             else
