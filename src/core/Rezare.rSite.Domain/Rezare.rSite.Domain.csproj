@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Enumerations\" />
     <Folder Include="ValueObjects\" />
   </ItemGroup>
 
