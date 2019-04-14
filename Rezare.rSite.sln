@@ -6,10 +6,19 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E513FA3C-0FC5-45EA-AB52-03E8300ACB08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1B061823-AA85-4598-BDD8-0BBA06A3663C}"
+	ProjectSection(SolutionItems) = preProject
+		tests\README.md = tests\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{8C28C1E1-6DF6-4BC1-A9F7-EC4500BCCE23}"
+	ProjectSection(SolutionItems) = preProject
+		src\core\README.md = src\core\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{8EA5C949-A5BC-4996-83B2-8F28DBA651D8}"
+	ProjectSection(SolutionItems) = preProject
+		src\infrastructure\README.md = src\infrastructure\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentation", "{94749391-40AC-449D-B24C-E07F57E85E86}"
 EndProject
