@@ -1,5 +1,7 @@
 # Rezare.rSite.Application
 
+Application contains application-specific types and logic
+
 This is also known as the Use Cases project. This is where the business logic resides and uses the objects from the Application layer.
 
 ## UseCases
