@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Rezare.rSite.Api.Controllers
 {
-    //[Route("api/[controller]")]
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/links")]
     [ApiController]
-    public class LinksProviderController : ControllerBase
+    public class LinksController : ControllerBase
     {
         /// <summary>
         /// Gets a bunch of links.
@@ -36,36 +38,50 @@ namespace Rezare.rSite.Api.Controllers
             return new[] { link1, link2 };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class Link
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public Uri Uri { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public string Description { get; set; }
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/values/5
+        //[HttpGet("{id}")]
+        //public ActionResult<string> Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //// POST api/values
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/values/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/values/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
