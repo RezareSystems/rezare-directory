@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
 })
 
 export class LinksComponent {
+  links = [
+    {
+      uri: "https://www.google.co.nz",
+      name: "Google",
+      description: "Search engine"
+    }
+  ];
+  
   constructor() {}
 }
