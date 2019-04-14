@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Application", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{B66B59D6-486D-4988-AA5C-E2B148DFA2BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rezare.rSite.Common", "src\common\Rezare.rSite.Common\Rezare.rSite.Common.csproj", "{6807EF01-B893-49A1-AD31-B6F42536C272}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Common", "src\common\Rezare.rSite.Common\Rezare.rSite.Common.csproj", "{6807EF01-B893-49A1-AD31-B6F42536C272}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
