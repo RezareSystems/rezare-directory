@@ -1,7 +1,8 @@
 <h2 class="content-block">Links</h2>
 <div class="content-block">
     <dx-data-grid
-        [dataSource]="store">
+        [dataSource]="store"
+        (onRowClick)="openLink($event)">
         <dxi-column dataField="name"></dxi-column>
         <dxi-column dataField="description"></dxi-column>
     </dx-data-grid>

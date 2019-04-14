@@ -38,4 +38,12 @@ export class LinksComponent {
       }
     });
   }
+
+  openLink (e:any) {
+    if (!e.data) {
+      return;
+    }
+
+    window.open(e.data.uri, '_blank');
+  }
 }
