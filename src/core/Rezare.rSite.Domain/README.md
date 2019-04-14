@@ -1,11 +1,21 @@
 # Rezare.rSite.Domain
 
+The Domain contains enterprise-wide types and logic
+
 The following is a description of each area in the Domain.
 This project provides a location for storing the Domain-Driven Design 
 
 ## Entities
 
 These are objects that have an identity, and need to be distinguishable, even when they have the same values.
+
+
+ 
+## Enumerations
+
+
+## Exceptions
+
 
 ## ValueObjects
 
@@ -20,11 +30,6 @@ Should ValueObjects should be immutable.
  - https://deviq.com/value-object/
  - https://martinfowler.com/bliki/ValueObject.html
  - https://enterprisecraftsmanship.com/2017/06/15/value-objects-when-to-create-one/
- 
-
- 
-## Enums
-
 
 ## Nuget Packages
 
