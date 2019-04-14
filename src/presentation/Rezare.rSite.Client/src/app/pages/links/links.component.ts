@@ -46,4 +46,8 @@ export class LinksComponent {
 
     window.open(e.data.uri, '_blank');
   }
+
+  configureCell(e: any) {
+    e.cellElement.style.cursor = 'pointer';
+  }
 }

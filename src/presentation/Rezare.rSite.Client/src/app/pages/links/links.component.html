@@ -2,7 +2,9 @@
 <div class="content-block">
     <dx-data-grid
         [dataSource]="store"
-        (onRowClick)="openLink($event)">
+        (onRowClick)="openLink($event)"
+        (onCellPrepared)="configureCell($event)"
+        hoverStateEnabled="true">
         <dxi-column dataField="name"></dxi-column>
         <dxi-column dataField="description"></dxi-column>
     </dx-data-grid>
