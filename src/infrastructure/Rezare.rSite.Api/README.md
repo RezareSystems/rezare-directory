@@ -5,4 +5,5 @@
 ### Analyzers
 
  - [AspNetCoreAnalyzers](https://github.com/DotNetAnalyzers/AspNetCoreAnalyzers)
- - [SecurityCodeScan](https://security-code-scan.github.io/)
+
+ - [SecurityCodeScan.VS2017](https://security-code-scan.github.io/) To install once Warning CS4032 has been fixed.
