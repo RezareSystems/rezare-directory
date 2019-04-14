@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule } from './layouts';
@@ -20,7 +21,8 @@ import { DxDataGridModule } from 'devextreme-angular';
     FooterModule,
     LoginFormModule,
     AppRoutingModule,
-    DxDataGridModule
+    DxDataGridModule,
+    HttpClientModule
   ],
   providers: [AuthService, ScreenService, AppInfoService],
   bootstrap: [AppComponent]
