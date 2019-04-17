@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from './../../../environments/environment';
 import CustomStore from 'devextreme/data/custom_store';
-import { LinksApiService } from 'src/app/shared/services/links-api.service';
+import { LinksApiService } from 'src/app/modules/api/links-api.service';
 
 @Component({
   templateUrl: 'links.component.html',
