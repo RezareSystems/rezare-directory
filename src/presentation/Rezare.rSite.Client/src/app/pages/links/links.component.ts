@@ -2,34 +2,21 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import CustomStore from 'devextreme/data/custom_store';
+import { LinksApiService } from 'src/app/shared/services/links-api.service';
 
 @Component({
   templateUrl: 'links.component.html',
-  styleUrls: [ './links.component.scss' ]
+  styleUrls: [ './links.component.scss' ],
 })
 
 export class LinksComponent {
   store: CustomStore;
 
-  links = [
-    {
-      uri: "https://www.google.co.nz",
-      name: "Google",
-      description: "Search engine"
-    }
-  ];
-
-  constructor(httpClient: HttpClient) {
+  constructor(api: LinksApiService) {
     this.store = new CustomStore({
       load: function(loadOptions: any) {
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Access-Control-Allow-Origin': 'http://localhost:4200'
-          })
-        };
 
-        return httpClient.get(environment.apiUrl + 'links', httpOptions)
-          .toPromise()
+        return api.getAll()
           .then((data: any) => {
             return {
               data: data

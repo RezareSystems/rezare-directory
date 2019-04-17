@@ -8,6 +8,9 @@ import { FooterModule, LoginFormModule } from './shared/components';
 import { AuthService, ScreenService, AppInfoService } from './shared/services';
 import { AppRoutingModule } from './app-routing.module';
 import { DxDataGridModule } from 'devextreme-angular';
+import { HttpClientConfigurationService } from './shared/services/http-client-configuration.service';
+import { ApiUrlGeneratorService } from './shared/services/api-url-generator.service';
+import { LinksApiService } from './shared/services/links-api.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,14 @@ import { DxDataGridModule } from 'devextreme-angular';
     DxDataGridModule,
     HttpClientModule
   ],
-  providers: [AuthService, ScreenService, AppInfoService],
+  providers: [
+    AuthService, 
+    ScreenService, 
+    AppInfoService, 
+    ApiUrlGeneratorService,
+    HttpClientConfigurationService,
+    LinksApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
