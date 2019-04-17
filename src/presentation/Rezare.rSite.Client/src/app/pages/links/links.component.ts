@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from './../../../environments/environment';
 import CustomStore from 'devextreme/data/custom_store';
 
 @Component({
@@ -27,7 +28,7 @@ export class LinksComponent {
           })
         };
 
-        return httpClient.get('https://localhost:44378/api/links', httpOptions)
+        return httpClient.get(environment.apiUrl + 'links', httpOptions)
           .toPromise()
           .then((data: any) => {
             return {
