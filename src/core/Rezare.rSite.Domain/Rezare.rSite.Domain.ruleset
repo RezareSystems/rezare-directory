@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Rezare.rSite.Domain analyzer ruleset" Description=" The analyzer rules specific to the Rezare.rSite.Domain project." ToolsVersion="16.0">
+<RuleSet Name="Rezare.rSite.Domain analyzer ruleset" Description="The analyzer rules specific to the Rezare.rSite.Domain project." ToolsVersion="16.0">
   <Include Path="..\..\..\rezare.rsite.ruleset" Action="Default" />
 </RuleSet>
