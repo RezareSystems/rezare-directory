@@ -8,7 +8,6 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <CodeAnalysisRuleSet>Rezare.rSite.Domain.Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
