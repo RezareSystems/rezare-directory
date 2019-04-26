@@ -30,7 +30,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ErrorProne.NET" Version="0.1.5898.41180" />
+    <PackageReference Include="ErrorProne.NET" Version="0.1.5898.41180">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>  
     <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.2.0-beta.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -38,6 +40,9 @@
     <PackageReference Include="ErrorProne.NET.Structs" Version="0.2.0-beta.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.2">
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ReflectionAnalyzers" Version="0.1.20-dev">
       <PrivateAssets>all</PrivateAssets>
@@ -48,6 +53,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Roslynator.CodeFixes" Version="2.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SecurityCodeScan.VS2017" Version="3.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
