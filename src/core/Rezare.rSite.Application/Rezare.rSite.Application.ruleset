@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Rezare.rSite.Application analyzer ruleset" Description="The analyzer rules specific to the Rezare.rSite.Application project." ToolsVersion="16.0">
-  <Include Path="..\..\..\GitHub\rezare-directory\rezare.rsite.ruleset" Action="Default" />
+  <Include Path="..\..\..\rezare.rsite.ruleset" Action="Default" />
 </RuleSet>
