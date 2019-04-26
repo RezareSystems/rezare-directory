@@ -45,6 +45,7 @@ Should ValueObjects should be immutable.
  - [ErrorProne.NET.Structs](https://github.com/SergeyTeplyakov/ErrorProne.NET)
  - [ErrorProne.NET.CoreAnalyzers](https://github.com/SergeyTeplyakov/ErrorProne.NET)
  - [ReflectionAnalyzers](https://github.com/DotNetAnalyzers/ReflectionAnalyzers)
-
+ - [Microsoft.CodeAnalysis.FxCopAnalyzers](https://github.com/dotnet/roslyn-analyzers)
+ 
  - [SecurityCodeScan.VS2017](https://security-code-scan.github.io/) To install once Warning CS4032 has been fixed.
  - [RoslynClrHeapAllocationAnalyzer](https://github.com/Microsoft/RoslynClrHeapAllocationAnalyzer) To install once VS2019 is supported.
