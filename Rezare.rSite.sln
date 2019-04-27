@@ -38,6 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Common", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{85B051F3-632C-4D2D-8392-FF3EEFE5710B}"
 	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
 		README.md = README.md
 		Rezare.rSite.ruleset = Rezare.rSite.ruleset
 		stylecop.json = stylecop.json
