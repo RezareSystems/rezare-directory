@@ -1,41 +1,42 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace Rezare.rSite.Api
 {
     /// <summary>
-    /// 
+    /// Startup.
     /// </summary>
     public class Startup
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// Startup.
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="configuration">Configuration parameter.</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         /// <summary>
-        /// 
+        /// Gets the Startup configuration.
         /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// 
+        /// Configure Services.
         /// </summary>
         /// <remarks>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </remarks>
-        /// <param name="services"></param>
+        /// <param name="services">Services parameter.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -61,19 +62,19 @@ namespace Rezare.rSite.Api
         }
 
         /// <summary>
-        /// 
+        /// Configure.
         /// </summary>
         /// <remarks>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </remarks>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
+        /// <param name="app">App parameter.</param>
+        /// <param name="env">Env parameter.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
