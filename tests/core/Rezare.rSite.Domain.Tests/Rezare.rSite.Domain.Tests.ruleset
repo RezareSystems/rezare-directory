@@ -1,4 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Rezare.rSite.Domain.Tests analyzer rulset." Description="The analyzer rules specific to the Rezare.rSite.Domain.Tests project." ToolsVersion="16.0">
   <Include Path="..\..\..\rezare.rsite.ruleset" Action="Default" />
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS1591" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1600" Action="None" />
+  </Rules>
 </RuleSet>
