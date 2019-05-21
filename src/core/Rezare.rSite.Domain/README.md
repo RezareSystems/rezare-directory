@@ -5,6 +5,19 @@ The Domain contains enterprise-wide types and logic
 The following is a description of each area in the Domain.
 This project provides a location for storing the Domain-Driven Design 
 
+## SeedWork
+
+This is where the base objects are stored that are used with other classes in the domain.
+Other names for this folder could possibly be: Shared, Common, Infrastructure, Base, Model, BaseModel ?
+
+According to the following link:
+https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/seedwork-domain-model-base-classes-interfaces
+It is recommended that this folder be called SeedWork, though Common, SharedKernel, or something similar is also accepted.
+This article also links to these:
+https://www.artima.com/forums/flat.jsp?forum=106&thread=8826
+https://martinfowler.com/bliki/Seedwork.html
+
+
 ## Entities
 
 These are objects that have an identity, and need to be distinguishable, even when they have the same values.
