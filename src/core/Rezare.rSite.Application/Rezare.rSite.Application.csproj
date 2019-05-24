@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="UseCases\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +55,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rezare.rSite.Domain\Rezare.rSite.Domain.csproj" />
   </ItemGroup>
 
 </Project>
