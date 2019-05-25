@@ -10,19 +10,32 @@ namespace Rezare.rSite.Domain.ValueObjects
     public class Link : ValueObject
     {
         /// <summary>
-        /// Gets or sets the Uri.
+        /// Initializes a new instance of the <see cref="Link"/> class.
         /// </summary>
-        public Uri Uri { get; set; }
+        /// <param name="uri">The link location.</param>
+        /// <param name="name">The link's name.</param>
+        /// <param name="description">The description of what this link is for.</param>
+        public Link(Uri uri, string name, string description)
+        {
+            Uri = uri;
+            Name = name;
+            Description = description;
+        }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets the link value.
         /// </summary>
-        public string Name { get; set; }
+        public Uri Uri { get; }
 
         /// <summary>
-        /// Gets or sets the description.
+        /// Gets the name of this link.
         /// </summary>
-        public string Description { get; set; }
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets the link's description.
+        /// </summary>
+        public string Description { get; }
 
         /// <inheritdoc />
         protected override IEnumerable<object> GetEqualityComponents()

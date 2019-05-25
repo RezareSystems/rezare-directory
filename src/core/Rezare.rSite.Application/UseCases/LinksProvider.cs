@@ -20,19 +20,15 @@ namespace Rezare.rSite.Application.UseCases
             var path2 = "https://buildmaster.rezare.co.nz/";
 #pragma warning restore S1075
 
-            var link1 = new Link
-            {
-                Uri = new Uri(path1),
-                Name = "2talk",
-                Description = "The 2talk portal for managing your work phone."
-            };
+            var link1 = new Link(
+                new Uri(path1),
+                "2talk",
+                "The 2talk portal for managing your work phone.");
 
-            var link2 = new Link
-            {
-                Uri = new Uri(path2),
-                Name = "BuildMaster",
-                Description = "Deployment system for Rezare projects."
-            };
+            var link2 = new Link(
+                new Uri(path2),
+                "BuildMaster",
+                "Deployment system for Rezare projects.");
 
             return new[] { link1, link2 };
         }
