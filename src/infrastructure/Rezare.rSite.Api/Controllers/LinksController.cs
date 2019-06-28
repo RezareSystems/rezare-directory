@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Rezare.rSite.Application.UseCases;
+using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Domain.ValueObjects;
 
 namespace Rezare.rSite.Api.Controllers
@@ -14,6 +13,17 @@ namespace Rezare.rSite.Api.Controllers
     [ApiController]
     public class LinksController : ControllerBase
     {
+        private readonly ILinksProvider linksProvider;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinksController"/> class.
+        /// </summary>
+        /// <param name="linksProvider">The links provider.</param>
+        public LinksController(ILinksProvider linksProvider)
+        {
+            this.linksProvider = linksProvider;
+        }
+
         /// <summary>
         /// Gets a bunch of links.
         /// </summary>
@@ -25,7 +35,7 @@ namespace Rezare.rSite.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Link>> Get()
         {
-            var linksList = LinksProvider.GetLinks();
+            var linksList = linksProvider.GetLinks();
 
             return linksList.ToList();
         }

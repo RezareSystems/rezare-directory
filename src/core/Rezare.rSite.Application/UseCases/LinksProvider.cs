@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Domain.ValueObjects;
 
 namespace Rezare.rSite.Application.UseCases
@@ -7,13 +8,13 @@ namespace Rezare.rSite.Application.UseCases
     /// <summary>
     /// LinksProvider.
     /// </summary>
-    public static class LinksProvider
+    public class LinksProvider : ILinksProvider
     {
         /// <summary>
         /// Get Links.
         /// </summary>
         /// <returns>The list of Links.</returns>
-        public static IEnumerable<Link> GetLinks()
+        public IEnumerable<Link> GetLinks()
         {
 #pragma warning disable S1075
             var path1 = "https://www.2talk.co.nz/login.html";

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Rezare.rSite.Application.Interfaces;
+using Rezare.rSite.Application.UseCases;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Rezare.rSite.Api
@@ -38,7 +42,8 @@ namespace Rezare.rSite.Api
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </remarks>
         /// <param name="services">Services parameter.</param>
-        public void ConfigureServices(IServiceCollection services)
+        /// <returns>The autofac Service Provider.</returns>
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {
@@ -60,6 +65,18 @@ namespace Rezare.rSite.Api
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            // Autofac
+            // https://www.dotnetcurry.com/aspnet-core/1426/dependency-injection-di-aspnet-core
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.Populate(services);
+
+            containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
+
+            var container = containerBuilder.Build();
+
+            return new AutofacServiceProvider(container);
         }
 
         /// <summary>
