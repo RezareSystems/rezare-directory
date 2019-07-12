@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Application.UseCases;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Rezare.rSite.Api
 {
@@ -55,26 +56,9 @@ namespace Rezare.rSite.Api
                 });
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSwaggerGen(GenerateSwaggerOptions);
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "r-Site API", Version = "v1" });
-
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
-
-            // Autofac
-            // https://www.dotnetcurry.com/aspnet-core/1426/dependency-injection-di-aspnet-core
-            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.Populate(services);
-
-            containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
-
-            var container = containerBuilder.Build();
+            var container = AutoFacContainerBuilder(services);
 
             return new AutofacServiceProvider(container);
         }
@@ -111,6 +95,40 @@ namespace Rezare.rSite.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private void GenerateSwaggerOptions(SwaggerGenOptions options)
+        {
+            var openApiInfo = new OpenApiInfo
+            {
+                Title = "r-Site API",
+                Version = "v1"
+            };
+
+            options.SwaggerDoc("v1", openApiInfo);
+
+            // Set the comments path for the Swagger JSON and UI.
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
+        }
+
+        /// <summary>
+        /// Creates an AutoFac ContainerBuilder.
+        /// This associated concrete classes with abstract files.
+        /// </summary>
+        /// <param name="services">The services.</param>
+        /// <returns>AutoFac ContainerBuilder.</returns>
+        private IContainer AutoFacContainerBuilder(IServiceCollection services)
+        {
+            // https://www.dotnetcurry.com/aspnet-core/1426/dependency-injection-di-aspnet-core
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
+            var containerBuilder = new ContainerBuilder();
+
+            containerBuilder.Populate(services);
+            containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
+
+            return containerBuilder.Build();
         }
     }
 }
