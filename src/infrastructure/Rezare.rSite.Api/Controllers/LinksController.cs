@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Rezare.rSite.Api.Models;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Domain.ValueObjects;
 
@@ -33,11 +34,20 @@ namespace Rezare.rSite.Api.Controllers
         /// </remarks>
         /// <returns>Some links.</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<Link>> Get()
+        public ActionResult<IEnumerable<LocationLink>> Get()
         {
             var linksList = linksProvider.GetLinks();
 
-            return linksList.ToList();
+            var locationLinks = linksList.Select(
+                    link => new LocationLink
+                    {
+                        Description = link.Description,
+                        Name = link.Name,
+                        Uri = link.Uri
+                    })
+                .ToList();
+
+            return locationLinks;
         }
     }
 }
