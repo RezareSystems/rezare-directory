@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Application.UseCases;
+using Rezare.rSite.Persistence;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Rezare.rSite.Api
@@ -126,6 +127,7 @@ namespace Rezare.rSite.Api
 
             containerBuilder.Populate(services);
             containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
+            containerBuilder.RegisterType<LinkRepository>().As<ILinkRepository>();
 
             return containerBuilder.Build();
         }

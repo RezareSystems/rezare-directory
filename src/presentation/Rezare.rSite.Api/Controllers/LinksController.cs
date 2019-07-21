@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Rezare.rSite.Api.Models;
 using Rezare.rSite.Application.Interfaces;
-using Rezare.rSite.Domain.ValueObjects;
 
 namespace Rezare.rSite.Api.Controllers
 {

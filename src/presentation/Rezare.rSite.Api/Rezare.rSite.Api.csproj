@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\core\Rezare.rSite.Application\Rezare.rSite.Application.csproj" />
+    <ProjectReference Include="..\..\infrastructure\Rezare.rSite.Persistence\Rezare.rSite.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
