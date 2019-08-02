@@ -10,7 +10,6 @@ A website showing all the useful Rezare links.
    
  - xunit
  - xunit.runner.visualstudio
-
  - FluentAssertions
 
 ### Analyzers
