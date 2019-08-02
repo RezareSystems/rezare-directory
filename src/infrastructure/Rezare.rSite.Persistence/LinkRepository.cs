@@ -50,7 +50,7 @@ namespace Rezare.rSite.Persistence
                 "Rezare's Github page for repositories.");
 
             var link7 = new Link(
-                new Uri("coffee.rezare.co.nz"),
+                new Uri("https://coffee.rezare.co.nz"),
                 "Coffee Ordering",
                 "Hot drink selection for Rezare Staff meetings.");
 #pragma warning restore S1075
