@@ -1,0 +1,48 @@
+# AWS: https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+
+version: 0.2
+
+env:
+    variables:
+        # S3 Bucket name, found under the AWS S3 service.
+        S3_BUCKET: "r-site.client"
+# <APP_NAME_HERE>
+APP_NAME: "r-Site"
+BUILD_ENV : "prod"
+
+phases:
+    install:
+        #runtime-versions:
+            #nodejs: 
+        commands:
+            - echo Installing source NPM dependencies...
+            - npm install
+            - npm install -g @angular/cli
+
+#        finally:
+#            - echo This will always be run, even if the update or install command fails
+
+#    pre_build:
+#        commands:
+
+    build:
+        commands:
+            # Builds Angular application. You can also build using custom environment here like mock or staging
+            - echo Build started on `date`
+            - ng build --configuration awseb
+
+    post_build:
+        commands:
+            # Clear S3 bucket.
+            - aws s3 rm s3://r-site.client --recursive
+            - echo S3 bucket is cleared.
+
+            # Copy dist folder to S3 bucket, As of Angular 6, builds are stored inside an app folder in distribution and not at the root of the dist folder
+            - aws s3 cp dist s3://r-site.client --recursive
+            - echo Build completed on `date`
+
+artifacts:
+    files:
+        - '/'
+    discard-paths: yes
+    base-directory: 'dist*'
