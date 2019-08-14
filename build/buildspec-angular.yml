@@ -16,7 +16,7 @@ phases:
             #nodejs: 
         commands:
             - echo Installing source NPM dependencies...
-            - cd "../src/presentation/Rezare.rSite.Client"
+            - cd "src/presentation/Rezare.rSite.Client"
             - npm install
             - npm install -g @angular/cli
 
