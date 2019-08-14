@@ -16,14 +16,15 @@ phases:
             #nodejs: 
         commands:
             - echo Installing source NPM dependencies...
+            - cd "../src/presentation/Rezare.rSite.Client"
             - npm install
             - npm install -g @angular/cli
 
 #        finally:
 #            - echo This will always be run, even if the update or install command fails
 
-#    pre_build:
-#        commands:
+    # pre_build:
+    #     commands:
 
     build:
         commands:
