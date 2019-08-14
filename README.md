@@ -1,4 +1,4 @@
-# r-Site
+# r-Site: The Rezare Information Centre
 A website showing all the useful Rezare links.
 
 ## Tools in use
