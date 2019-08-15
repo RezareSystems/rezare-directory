@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://rezarersiteapi-test.ap-southeast-2.elasticbeanstalk.com/api/',
+  apiUrl: 'https://unrulyco.de/api/',
   cors: {
     enable: true,
     origin: '*'
