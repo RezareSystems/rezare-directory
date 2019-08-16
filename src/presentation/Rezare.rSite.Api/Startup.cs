@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Amazon.DynamoDBv2;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Application.UseCases;
 using Rezare.rSite.Persistence;
+using Rezare.rSite.Persistence.DynamoDb;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Rezare.rSite.Api
@@ -60,6 +62,10 @@ namespace Rezare.rSite.Api
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(GenerateSwaggerOptions);
+
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+
+            services.AddAWSService<IAmazonDynamoDB>();
 
             var container = AutoFacContainerBuilder(services);
 
@@ -130,7 +136,9 @@ namespace Rezare.rSite.Api
 
             containerBuilder.Populate(services);
             containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
-            containerBuilder.RegisterType<LinkRepository>().As<ILinkRepository>();
+            containerBuilder.RegisterType<Persistence.DynamoDb.LinkRepository>().As<Application.Interfaces.ILinkRepository>();
+            containerBuilder.RegisterType<CreateTable>().As<ICreateTable>();
+            
 
             return containerBuilder.Build();
         }

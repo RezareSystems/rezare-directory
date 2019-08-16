@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Domain.ValueObjects;
 
@@ -21,9 +22,21 @@ namespace Rezare.rSite.Application.UseCases
         }
 
         /// <summary>
+        /// Create new link
+        /// </summary>
+        /// <param name="link"></param>
+        public string CreateLink(Link link)
+        {
+            var response = linkRepository.Create(link);
+            return response.Result;
+        }
+
+        /// <summary>
         /// Get Links.
         /// </summary>
         /// <returns>The list of Links.</returns>
-        public IEnumerable<Link> GetLinks() => linkRepository.GetLinks();
+        public IEnumerable<Link> GetLinks() {
+            return linkRepository.GetLinks().Result;
+        }
     }
 }

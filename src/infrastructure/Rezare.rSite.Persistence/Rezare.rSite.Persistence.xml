@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rezare.rSite.Persistence</name>
+    </assembly>
+    <members>
+        <member name="T:Rezare.rSite.Persistence.DynamoDb.CreateTable">
+            <summary>
+            Create table.
+            </summary>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.CreateTable.#ctor(Amazon.DynamoDBv2.IAmazonDynamoDB)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.CreateTable.Create">
+            <summary>
+            Create.
+            </summary>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.CreateTable.WaitTillTableCreation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Rezare.rSite.Persistence.DynamoDb.ICreateTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.ICreateTable.Create">
+            <summary>
+            Creates table.
+            </summary>
+        </member>
+        <member name="T:Rezare.rSite.Persistence.DynamoDb.LinkRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.LinkRepository.#ctor(Amazon.DynamoDBv2.IAmazonDynamoDB)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.LinkRepository.Create(Rezare.rSite.Domain.ValueObjects.Link)">
+            <summary>
+            
+            </summary>
+            <param name="link"></param>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.DynamoDb.LinkRepository.GetLinks">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Rezare.rSite.Persistence.LinkRepository">
+            <summary>
+            Link Repository.
+            </summary>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.LinkRepository.Create(Rezare.rSite.Domain.ValueObjects.Link)">
+            <summary>
+            
+            </summary>
+            <param name="link"></param>
+        </member>
+        <member name="M:Rezare.rSite.Persistence.LinkRepository.GetLinks">
+            <summary>
+            Gets the links.
+            </summary>
+            <returns>
+            The links.
+            </returns>
+        </member>
+    </members>
+</doc>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Domain.ValueObjects;
 
@@ -11,12 +12,21 @@ namespace Rezare.rSite.Persistence
     public class LinkRepository : ILinkRepository
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="link"></param>
+        public Task<string> Create(Link link)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets the links.
         /// </summary>
         /// <returns>
         /// The links.
         /// </returns>
-        public IEnumerable<Link> GetLinks()
+        public Task<IEnumerable<Link>> GetLinks()
         {
 #pragma warning disable S1075
             var link1 = new Link(
@@ -55,7 +65,7 @@ namespace Rezare.rSite.Persistence
                 "Hot drink selection for Rezare Staff meetings.");
 #pragma warning restore S1075
 
-            return new[]
+            var list = new List<Link>
             {
                 link1,
                 link2,
@@ -65,6 +75,18 @@ namespace Rezare.rSite.Persistence
                 link6,
                 link7
             };
+            return Task.FromResult<IEnumerable<Link>>(list);
+
+            //return new[]
+            //{
+            //    link1,
+            //    link2,
+            //    link3,
+            //    link4,
+            //    link5,
+            //    link6,
+            //    link7
+            //};
         }
     }
 }

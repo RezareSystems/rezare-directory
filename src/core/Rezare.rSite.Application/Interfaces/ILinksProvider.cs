@@ -9,6 +9,11 @@ namespace Rezare.rSite.Application.Interfaces
     public interface ILinksProvider
     {
         /// <summary>
+        ///  Create new link
+        /// </summary>
+        string CreateLink(Link link);
+
+        /// <summary>
         /// Gets the links.
         /// </summary>
         /// <returns>List of links.</returns>
