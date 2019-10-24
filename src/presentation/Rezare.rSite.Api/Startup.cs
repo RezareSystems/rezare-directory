@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Rezare.rSite.Application.Interfaces;
 using Rezare.rSite.Application.UseCases;
@@ -55,7 +56,8 @@ namespace Rezare.rSite.Api
                         .AllowAnyMethod();
                 });
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddControllers();
             services.AddSwaggerGen(GenerateSwaggerOptions);
 
             var container = AutoFacContainerBuilder(services);
@@ -71,7 +73,7 @@ namespace Rezare.rSite.Api
         /// </remarks>
         /// <param name="app">App parameter.</param>
         /// <param name="env">Env parameter.</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -85,16 +87,18 @@ namespace Rezare.rSite.Api
 
             if (env.IsDevelopment())
             {
-                app.UseCors();
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
+                app.UseCors();
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private void GenerateSwaggerOptions(SwaggerGenOptions options)
