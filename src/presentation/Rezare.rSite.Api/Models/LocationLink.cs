@@ -13,7 +13,7 @@ namespace Rezare.rSite.Api.Models
         /// <value>
         /// The URI.
         /// </value>
-        public Uri Uri { get; set; }
+        public Uri? Uri { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -21,7 +21,7 @@ namespace Rezare.rSite.Api.Models
         /// <value>
         /// The name.
         /// </value>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -29,6 +29,6 @@ namespace Rezare.rSite.Api.Models
         /// <value>
         /// The description.
         /// </value>
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

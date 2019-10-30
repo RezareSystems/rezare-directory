@@ -14,7 +14,8 @@ namespace Rezare.rSite.Domain.SeedWork
     /// https://stackoverflow.com/questions/125319/should-using-directives-be-inside-or-outside-the-namespace?rq=1
     /// https://stackoverflow.com/questions/39708604/reorder-usings-and-keep-them-outside-of-the-namespace
     /// https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md
-    /// https://blog.submain.com/stylecop-detailed-guide/ .
+    /// https://blog.submain.com/stylecop-detailed-guide/
+    /// https://hackernoon.com/value-objects-like-a-pro-f1bfc1548c72 .
     /// </summary>
     public abstract class ValueObject
     {
@@ -31,7 +32,7 @@ namespace Rezare.rSite.Domain.SeedWork
         ///   <c>true</c> if its operands are equal; otherwise, <c>false</c>.
         /// </returns>
 #pragma warning disable S3875
-        public static bool operator ==(ValueObject left, ValueObject right)
+        public static bool operator ==(ValueObject? left, ValueObject? right)
 #pragma warning restore S3875
         {
             var isLeftNull = left is null;
@@ -47,7 +48,7 @@ namespace Rezare.rSite.Domain.SeedWork
                 return false;
             }
 
-            return left.Equals(right);
+            return left!.Equals(right);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Rezare.rSite.Domain.SeedWork
         /// <returns>
         ///   <c>true</c> if its operands are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(ValueObject left, ValueObject right) => !(left == right);
+        public static bool operator !=(ValueObject? left, ValueObject? right) => !(left == right);
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -67,16 +68,17 @@ namespace Rezare.rSite.Domain.SeedWork
         /// <returns>
         ///   <c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            var isObjNull = obj is null;
+            var isObjNullOrDifferentType = GetType() != obj?.GetType();
 
-            if (isObjNull || GetType() != obj.GetType())
+            if (isObjNullOrDifferentType)
             {
                 return false;
             }
 
-            var valueObjectEqualityComponents = ((ValueObject)obj).GetEqualityComponents();
+            var valueObject = (ValueObject)obj!;
+            var valueObjectEqualityComponents = valueObject.GetEqualityComponents();
 
             return GetEqualityComponents().SequenceEqual(valueObjectEqualityComponents);
         }

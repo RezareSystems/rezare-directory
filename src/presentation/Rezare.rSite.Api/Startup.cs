@@ -5,7 +5,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,6 +37,42 @@ namespace Rezare.rSite.Api
         public IConfiguration Configuration { get; }
 
         /// <summary>
+        /// Configure.
+        /// </summary>
+        /// <remarks>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </remarks>
+        /// <param name="app">App parameter.</param>
+        /// <param name="env">Env parameter.</param>
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseCors();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+
+        /// <summary>
         /// Configure Services.
         /// </summary>
         /// <remarks>
@@ -66,39 +101,22 @@ namespace Rezare.rSite.Api
         }
 
         /// <summary>
-        /// Configure.
+        /// Creates an AutoFac ContainerBuilder.
+        /// This associated concrete classes with abstract files.
         /// </summary>
-        /// <remarks>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        /// </remarks>
-        /// <param name="app">App parameter.</param>
-        /// <param name="env">Env parameter.</param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <param name="services">The services.</param>
+        /// <returns>AutoFac ContainerBuilder.</returns>
+        private static IContainer AutoFacContainerBuilder(IServiceCollection services)
         {
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            // https://www.dotnetcurry.com/aspnet-core/1426/dependency-injection-di-aspnet-core
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
+            var containerBuilder = new ContainerBuilder();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            containerBuilder.Populate(services);
+            containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
+            containerBuilder.RegisterType<LinkRepository>().As<ILinkRepository>();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseCors();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            return containerBuilder.Build();
         }
 
         private void GenerateSwaggerOptions(SwaggerGenOptions options)
@@ -115,25 +133,6 @@ namespace Rezare.rSite.Api
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath);
-        }
-
-        /// <summary>
-        /// Creates an AutoFac ContainerBuilder.
-        /// This associated concrete classes with abstract files.
-        /// </summary>
-        /// <param name="services">The services.</param>
-        /// <returns>AutoFac ContainerBuilder.</returns>
-        private IContainer AutoFacContainerBuilder(IServiceCollection services)
-        {
-            // https://www.dotnetcurry.com/aspnet-core/1426/dependency-injection-di-aspnet-core
-            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
-            var containerBuilder = new ContainerBuilder();
-
-            containerBuilder.Populate(services);
-            containerBuilder.RegisterType<LinksProvider>().As<ILinksProvider>();
-            containerBuilder.RegisterType<LinkRepository>().As<ILinkRepository>();
-
-            return containerBuilder.Build();
         }
     }
 }

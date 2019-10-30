@@ -4,9 +4,9 @@ using Xunit;
 
 namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
 {
-    public class ValueObjectScenarios
+    public static class ValueObjectScenarios
     {
-        public static TheoryData<ValueObject, ValueObject, string> DifferentValueObjectsScenarios()
+        public static TheoryData<ValueObject?, ValueObject?, string> DifferentValueObjectsScenarios()
         {
             var valueObjectA = new BaseObject();
             var valueObjectB = new HelloObject();
@@ -14,7 +14,7 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
 
             var becauseMessage = "these objects are different";
 
-            return new TheoryData<ValueObject, ValueObject, string>
+            return new TheoryData<ValueObject?, ValueObject?, string>
             {
                 { null, valueObjectA, becauseMessage },
                 { valueObjectA, null, becauseMessage },
@@ -34,9 +34,9 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
             };
         }
 
-        public static TheoryData<ValueObject, ValueObject, string> NullValueObjectsScenario()
+        public static TheoryData<ValueObject?, ValueObject?, string> NullValueObjectsScenario()
         {
-            return new TheoryData<ValueObject, ValueObject, string>
+            return new TheoryData<ValueObject?, ValueObject?, string>
             {
                 { null, null, "both ValueObjects are null" }
             };
@@ -48,8 +48,7 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
         /// Therefore, when Equals is used to test the equality between a child and parent object,
         /// it should return false.
         /// Both base.Equals(derived) and derived.Equals(base) should be false.
-        /// What about the case where Derived does not override GetEqualityComponents? Should this be false?
-        /// It is expected that such a situation would/should not occur.
+        /// What about the case where Derived does not override GetEqualityComponents? This is also false.
         /// </summary>
         /// <returns>The given scenario.</returns>
         public static TheoryData<ValueObject, ValueObject, string> DerivedObjectsAreNotEqualScenarios()
@@ -73,23 +72,9 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
             };
         }
 
-        public class HelloObject : ValueObject
-        {
-            protected override IEnumerable<object> GetEqualityComponents()
-            {
-                yield return "Hello";
-            }
-        }
-
-        public class ByeObject : ValueObject
-        {
-            protected override IEnumerable<object> GetEqualityComponents()
-            {
-                yield return "Bye";
-            }
-        }
-
+#pragma warning disable CA1034 // Nested types should not be visible
         public class BaseObject : ValueObject
+#pragma warning restore CA1034 // Nested types should not be visible
         {
             protected override IEnumerable<object> GetEqualityComponents()
             {
@@ -97,7 +82,9 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
             }
         }
 
+#pragma warning disable CA1034 // Nested types should not be visible
         public class DerivedObject : BaseObject
+#pragma warning restore CA1034 // Nested types should not be visible
         {
             protected override IEnumerable<object> GetEqualityComponents()
             {
@@ -105,7 +92,23 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
             }
         }
 
-        public class DerivedObjectNoEqualityComponents : BaseObject
+        private class HelloObject : ValueObject
+        {
+            protected override IEnumerable<object> GetEqualityComponents()
+            {
+                yield return "Hello";
+            }
+        }
+
+        private class ByeObject : ValueObject
+        {
+            protected override IEnumerable<object> GetEqualityComponents()
+            {
+                yield return "Bye";
+            }
+        }
+
+        private class DerivedObjectNoEqualityComponents : BaseObject
         {
         }
     }

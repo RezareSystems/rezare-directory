@@ -1,4 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Rezare.rSite.Domain analyzer ruleset" Description="The analyzer rules specific to the Rezare.rSite.Domain project." ToolsVersion="16.0">
   <Include Path="../../../Rezare.rSite.ruleset" Action="Default" />
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1062" Action="None" />
+  </Rules>
 </RuleSet>
