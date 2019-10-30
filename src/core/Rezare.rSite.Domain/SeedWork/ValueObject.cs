@@ -7,15 +7,7 @@ namespace Rezare.rSite.Domain.SeedWork
 #pragma warning restore SA1300
 {
     /// <summary>
-    /// https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
-    /// https://enterprisecraftsmanship.com/2017/08/28/value-object-a-better-implementation/
-    /// old implementation: https://enterprisecraftsmanship.com/2015/01/03/value-objects-explained/
-    /// https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2019
-    /// https://stackoverflow.com/questions/125319/should-using-directives-be-inside-or-outside-the-namespace?rq=1
-    /// https://stackoverflow.com/questions/39708604/reorder-usings-and-keep-them-outside-of-the-namespace
-    /// https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md
-    /// https://blog.submain.com/stylecop-detailed-guide/
-    /// https://hackernoon.com/value-objects-like-a-pro-f1bfc1548c72 .
+    /// Value object base implementation.
     /// </summary>
     public abstract class ValueObject
     {
@@ -23,8 +15,8 @@ namespace Rezare.rSite.Domain.SeedWork
         /// Determines if its two operands are equal.
         /// </summary>
         /// <remarks>
-        /// This is a Sonar S3875 rule https://rules.sonarsource.com/csharp/RSPEC-3875
-        /// Can this class be written as an IEquatable, which is allowed?.
+        /// This violates Sonar rule S3875 https://rules.sonarsource.com/csharp/RSPEC-3875.
+        /// Suppressing S3875 is more appropriate, as ValueObject should be sealed if IEquatable is implemented.
         /// </remarks>
         /// <param name="left">The left side of the equality operator.</param>
         /// <param name="right">The right side of the equality operator.</param>
@@ -62,11 +54,11 @@ namespace Rezare.rSite.Domain.SeedWork
         public static bool operator !=(ValueObject? left, ValueObject? right) => !(left == right);
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current object.
+        /// Determines whether the specified object is equal to this object.
         /// </summary>
-        /// <param name="obj">The object to compare with the current object.</param>
+        /// <param name="obj">The object to compare with this object.</param>
         /// <returns>
-        ///   <c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.
+        ///   <c>true</c> if the specified object is equal to this object; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object? obj)
         {
@@ -88,8 +80,8 @@ namespace Rezare.rSite.Domain.SeedWork
         /// </summary>
         /// <remarks>
         /// The HashCode class source code can be found here:
-        /// https://github.com/dotnet/coreclr/blob/master/src/System.Private.CoreLib/shared/System/HashCode.cs .
-        /// https://docs.microsoft.com/en-us/dotnet/api/system.hashcode?view=netcore-2.1 .
+        /// https://github.com/dotnet/coreclr/blob/master/src/System.Private.CoreLib/shared/System/HashCode.cs.
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.hashcode?view=netcore-2.1.
         /// This method is tested be checking that it produces the same hashcode for two instances of the same object.
         /// This is done because it is only guaranteed to produce the same hashcode per Operating System Process.
         /// </remarks>
