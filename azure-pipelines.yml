@@ -121,14 +121,6 @@ steps:
     #arguments: -c $(BuildConfiguration) --settings $(System.DefaultWorkingDirectory)/CodeCoverage.runsettings --collect:"XPlat Code Coverage" --RunConfiguration.DisableAppDomain=true
     #arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
 
-# Code Coverage examples
-# https://abelsquidhead.com/index.php/2019/04/13/getting-code-coverage-info-for-a-net-core-app-in-azure-pipelines/
-# src/MPaaS.Encryption.Tests/MPaaS.Encryption.Tests.csproj
-- script: dotnet stryker -tr dotnettest -r "['cleartext', 'html', 'progress']"
-  workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
-  displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
-
-
 # https://github.com/tonerdo/coverlet#net-global-tool-guide
 # https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
 # tests/core/Rezare.rSite.Domain.Tests/
@@ -182,3 +174,10 @@ steps:
 - script: |
     find .
   displayName: 'Output all Contents'
+
+# Code Coverage examples
+# https://abelsquidhead.com/index.php/2019/04/13/getting-code-coverage-info-for-a-net-core-app-in-azure-pipelines/
+# src/MPaaS.Encryption.Tests/MPaaS.Encryption.Tests.csproj
+# - script: dotnet stryker -tr dotnettest -r "['cleartext', 'html', 'progress']"
+#  workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
+#  displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
