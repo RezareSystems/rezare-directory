@@ -36,10 +36,10 @@ steps:
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: UseDotNet@2
-  displayName: 'Install .Net Core sdk 2.1.0'
+  displayName: 'Install .Net Core sdk 2.1.607'
   inputs:
     packageType: sdk
-    version: 2.1.0
+    version: 2.1.607
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 # DotNetCoreInstaller is now deprecated
