@@ -29,10 +29,17 @@ steps:
 # This states that this task can be used to change the version of .NET Core used in subsequent tasks like .NET Core cli task.
 # version options: https://github.com/dotnet/core/blob/master/release-notes/releases-index.json
 - task: UseDotNet@2
-  displayName: 'Use .Net Core sdk'
+  displayName: 'Install .Net Core sdk 3.1.100'
   inputs:
     packageType: sdk
     version: 3.1.100
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: UseDotNet@2
+  displayName: 'Install .Net Core sdk 2.1.0'
+  inputs:
+    packageType: sdk
+    version: 2.1.0
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 # DotNetCoreInstaller is now deprecated
