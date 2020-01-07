@@ -15,7 +15,7 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
             string becauseMessage)
         {
             // Act
-            var result = left.Equals(right);
+            var result = left?.Equals(right);
 
             // Assert
             result.Should().BeTrue(becauseMessage);
@@ -29,7 +29,7 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
             string becauseMessage)
         {
             // Act
-            var result = left.Equals(right);
+            var result = left?.Equals(right);
 
             // Assert
             result.Should().BeFalse(becauseMessage);

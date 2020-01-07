@@ -6,7 +6,7 @@ namespace Rezare.rSite.Api
     /// <summary>
     /// Api starting point.
     /// </summary>
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// Program Main method.

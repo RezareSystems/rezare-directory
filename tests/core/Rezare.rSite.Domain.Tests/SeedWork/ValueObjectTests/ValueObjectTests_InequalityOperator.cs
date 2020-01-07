@@ -23,8 +23,7 @@ namespace Rezare.rSite.Domain.Tests.SeedWork.ValueObjectTests
 
         [Theory]
         [MemberData(nameof(ValueObjectScenarios.DifferentValueObjectsScenarios), MemberType = typeof(ValueObjectScenarios))]
-
-        // [MemberData(nameof(ValueObjectScenarios.DerivedObjectsAreNotEqualScenarios), MemberType = typeof(ValueObjectScenarios))]
+        [MemberData(nameof(ValueObjectScenarios.DerivedObjectsAreNotEqualScenarios), MemberType = typeof(ValueObjectScenarios))]
         public void DifferentObjects_ReturnTrue(
             ValueObject left,
             ValueObject right,
