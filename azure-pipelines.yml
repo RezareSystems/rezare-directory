@@ -178,6 +178,6 @@ steps:
 # Code Coverage examples
 # https://abelsquidhead.com/index.php/2019/04/13/getting-code-coverage-info-for-a-net-core-app-in-azure-pipelines/
 # src/MPaaS.Encryption.Tests/MPaaS.Encryption.Tests.csproj
-# - script: dotnet stryker -tr dotnettest -r "['cleartext', 'html', 'progress']"
-#  workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
-#  displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
+- script: dotnet stryker -tr dotnettest -r "['cleartext', 'html', 'progress']"
+  workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
+  displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
