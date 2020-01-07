@@ -35,10 +35,11 @@ steps:
     version: 3.1.100
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: DotNetCoreInstaller@1
-  displayName: 'Use .NET Core sdk 3.1.100'
-  inputs:
-    version: 3.1.100
+# DotNetCoreInstaller is now deprecated
+#- task: DotNetCoreInstaller@1
+#  displayName: 'Use .NET Core sdk 3.1.100'
+#  inputs:
+#    version: 3.1.100
 
 # Install needed tools. These tools are installed as global tools rather than to a specific tool-path
 # DotNet SDK 3 is used so that the update command can be used, so that the task doesn't throw an error if the tool is already installed.
