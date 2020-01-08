@@ -196,6 +196,6 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)
   displayName: Generate some txt file
 
-- publish: $(Build.SourcesDirectory)\myArtifact.txt
+- publish: $(Build.SourcesDirectory)/myArtifact.txt
   artifact: 'My Artifact txt file'
   displayName: Publish my artifact txt file
