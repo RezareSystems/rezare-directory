@@ -180,9 +180,16 @@ steps:
   workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
   displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
 
+- script: cat $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/mutation-report.html
+
 # Publish the results
 # Currently Stryker does not have a publish task: https://github.com/stryker-mutator/azure-devops-mutationreport-publisher
 # Azure DevOps has yet to get static html publishing: https://developercommunity.visualstudio.com/content/idea/491426/support-for-generic-html-publishing-inside-build-a.html
+# publish is a shortcut for PublishPipelineArtifact: https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml
+- publish: $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/mutation-report.html
+  artifact: 'Mutation Report'
+  displayName: Get Stryker Html file
+
 #- task: PublishPipelineArtifact@1
 #  displayName: Get stryker html file
 #  inputs:
