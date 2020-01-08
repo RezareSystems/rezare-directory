@@ -95,11 +95,11 @@ steps:
     projects: '$(solution)'
     arguments: '--configuration $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish'
-  inputs:
-    command: publish
-    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+#- task: DotNetCoreCLI@2
+#  displayName: 'Publish'
+#  inputs:
+#    command: publish
+#    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
 
 # Test the built solution
 - task: DotNetCoreCLI@2
