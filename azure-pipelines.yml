@@ -189,3 +189,11 @@ steps:
 #- publish: $(System.DefaultWorkingDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/mutation-report.html
 #  artifact: 'Mutation Report'
 #  displayName: Get Stryker Html file
+
+- script: echo "hello, I am a pipeline artifact" > myArtifact.txt
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: Generate some txt file
+
+- publish: $(Build.SourcesDirectory)\myArtifact.txt
+  artifact: 'My Artifact txt file'
+  displayName: Publish my artifact txt file
