@@ -190,7 +190,9 @@ steps:
 #  artifact: 'Mutation Report'
 #  displayName: Get Stryker Html file
 
-- script: echo "hello, I am a pipeline artifact" > myArtifact.txt
+- script: |
+    echo "hello, I am a pipeline artifact" > myArtifact.txt
+    ls
   workingDirectory: $(Build.SourcesDirectory)
   displayName: Generate some txt file
 
