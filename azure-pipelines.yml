@@ -183,8 +183,8 @@ steps:
 # Publish the results
 # Currently Stryker does not have a publish task: https://github.com/stryker-mutator/azure-devops-mutationreport-publisher
 # Azure DevOps has yet to get static html publishing: https://developercommunity.visualstudio.com/content/idea/491426/support-for-generic-html-publishing-inside-build-a.html
-- task: PublishPipelineArtifact@1
-  displayName: Get stryker html file
-  inputs:
-    targetPath: $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/
-    artifact: 'mutation-report.html'
+#- task: PublishPipelineArtifact@1
+#  displayName: Get stryker html file
+#  inputs:
+#    targetPath: $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/
+#    artifact: 'mutation-report.html'
