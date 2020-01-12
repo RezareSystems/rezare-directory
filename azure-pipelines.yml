@@ -6,19 +6,22 @@
 #trigger:
 #- develop
 
-# Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
-pool:
-#  vmimage: 'windows-latest'
-#  Default
-  vmImage: 'ubuntu-latest'
-#  vmImage: macOS-latest
+jobs:
+- job: 'build'
+  displayName: 'Build the test solution'
 
-variables:
-  solution: 'Rezare.rSite.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Debug'
+  # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
+  pool:
+  #  vmimage: 'windows-latest'
+  #  Default
+    vmImage: 'ubuntu-latest'
+  #  vmImage: macOS-latest
 
-steps:
+  variables:
+    solution: 'Rezare.rSite.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Debug'
+
 #- script: dotnet build --configuration $(buildConfiguration)
 #  displayName: 'dotnet build $(buildConfiguration)'
 
@@ -28,19 +31,23 @@ steps:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
 # This states that this task can be used to change the version of .NET Core used in subsequent tasks like .NET Core cli task.
 # version options: https://github.com/dotnet/core/blob/master/release-notes/releases-index.json
-- task: UseDotNet@2
-  displayName: 'Install .Net Core sdk 3.1.100'
-  inputs:
-    packageType: sdk
-    version: 3.1.100
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+  steps:
 
-- task: UseDotNet@2
-  displayName: 'Install .Net Core sdk 2.1.607'
-  inputs:
-    packageType: sdk
-    version: 2.1.607
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 3.1.100'
+    inputs:
+      packageType: sdk
+      version: 3.1.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 2.1.607'
+    inputs:
+      packageType: sdk
+      version: 2.1.607
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+
 
 # DotNetCoreInstaller is now deprecated
 #- task: DotNetCoreInstaller@1
@@ -56,44 +63,44 @@ steps:
 # Merge for using upgrade to install if not already installed: https://github.com/dotnet/cli/pull/10205
 
 # https://github.com/danielpalme/ReportGenerator
-- task: DotNetCoreCLI@2
-  inputs:
-    command: custom
-    custom: tool
-    arguments: update -g dotnet-reportgenerator-globaltool
-  displayName: Update (or install) ReportGenerator
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: custom
+      custom: tool
+      arguments: update -g dotnet-reportgenerator-globaltool
+    displayName: Update (or install) ReportGenerator
 
 # https://github.com/tonerdo/coverlet
-- task: DotNetCoreCLI@2
-  inputs:
-    command: custom
-    custom: tool
-    arguments: update -g coverlet.console
-  displayName: Update (or install) Coverlet
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: custom
+      custom: tool
+      arguments: update -g coverlet.console
+    displayName: Update (or install) Coverlet
 
 # https://github.com/stryker-mutator/stryker-net
-- task: DotNetCoreCLI@2
-  inputs:
-    command: custom
-    custom: tool
-    arguments: update -g dotnet-stryker
-  displayName: Update (or install) Stryker Mutator
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: custom
+      custom: tool
+      arguments: update -g dotnet-stryker
+    displayName: Update (or install) Stryker Mutator
 
 # Restore NuGet packages
-- task: DotNetCoreCLI@2
-  displayName: 'Restore NuGet packages for $(solution)'
-  inputs:
-    command: 'restore'
-    projects: '$(solution)'
-    verbosityRestore: 'detailed'
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages for $(solution)'
+    inputs:
+      command: 'restore'
+      projects: '$(solution)'
+      verbosityRestore: 'detailed'
 
 # Build the solution
-- task: DotNetCoreCLI@2
-  displayName: 'Build $(solution)'
-  inputs:
-    command: 'build'
-    projects: '$(solution)'
-    arguments: '--configuration $(buildConfiguration)'
+  - task: DotNetCoreCLI@2
+    displayName: 'Build $(solution)'
+    inputs:
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '--configuration $(buildConfiguration)'
 
 #- task: DotNetCoreCLI@2
 #  displayName: 'Publish'
@@ -102,12 +109,12 @@ steps:
 #    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
 
 # Test the built solution
-- task: DotNetCoreCLI@2
-  displayName: 'Run tests for $(solution) with Cobertura'
-  inputs:
-    command: test
-    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
-    arguments: -c $(buildConfiguration)
+  - task: DotNetCoreCLI@2
+    displayName: 'Run tests for $(solution) with Cobertura'
+    inputs:
+      command: test
+      projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+      arguments: -c $(buildConfiguration)
     #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
 #--logger "trx;LogFileName=TestResults.trx" 
 #            --logger "xunit;LogFileName=TestResults.xml"
@@ -121,81 +128,82 @@ steps:
     #arguments: -c $(BuildConfiguration) --settings $(System.DefaultWorkingDirectory)/CodeCoverage.runsettings --collect:"XPlat Code Coverage" --RunConfiguration.DisableAppDomain=true
     #arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
 
-# https://github.com/tonerdo/coverlet#net-global-tool-guide
-# https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
-# tests/core/Rezare.rSite.Domain.Tests/
-- script: coverlet tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
-  displayName: Run Coverlet to get code coverage. Seems to only work on Non-Windows machine.
-
-- script: |
-    cat $(Build.SourcesDirectory)/coverage.cobertura.xml
-  displayName: 'coverage.cobertura.xml contents'
-
-- script: |
-    echo $(Build.SourcesDirectory)
-    ls $(Build.SourcesDirectory)
-    find tests/core/Rezare.rSite.Domain.Tests
-  displayName: 'Contents of $(Build.SourcesDirectory)'
-
-- script: |
-    echo $(Agent.TempDirectory)
-    ls $(Agent.TempDirectory)
-  displayName: 'Contents of $(Agent.TempDirectory)'
-
-- script: |
-    echo $(Build.SourcesDirectory)
-    ls $(Build.SourcesDirectory)
-  displayName: 'Contents of $(Build.SourcesDirectory)'
-
-- script: |
-    echo $(Build.ArtifactStagingDirectory)
-    ls $(Build.ArtifactStagingDirectory)
-  displayName: 'Contents of $(Build.ArtifactStagingDirectory)'
-
-- script: |
-    echo $(Build.StagingDirectory)
-    ls $(Build.StagingDirectory)
-  displayName: 'Contents of $(Build.StagingDirectory)'
-
-- script: |
-    echo $(System.DefaultWorkingDirectory)
-    ls $(System.DefaultWorkingDirectory)
-  displayName: 'Contents of $(System.DefaultWorkingDirectory)'
-
-- script: reportgenerator -reports:$(Build.SourcesDirectory)/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
-  displayName: 'Create reports.'
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage'
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: $(Build.SourcesDirectory)/coverage.cobertura.xml
-
-- script: |
-    find .
-  displayName: 'Output all Contents'
-
-# Mutation Testing
-- script: dotnet stryker -tr dotnettest -r "['cleartext', 'html', 'progress']"
-  workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
-  displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
-
-- script: cat $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/mutation-report.html
-
-# Publish the results
-# Currently Stryker does not have a publish task: https://github.com/stryker-mutator/azure-devops-mutationreport-publisher
-# Azure DevOps has yet to get static html publishing: https://developercommunity.visualstudio.com/content/idea/491426/support-for-generic-html-publishing-inside-build-a.html
-# publish is a shortcut for PublishPipelineArtifact: https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml
-- publish: $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/
-  artifact: 'Mutation Report'
-  displayName: Get Stryker Html file
-
-- script: |
-    echo "hello, I am a pipeline artifact" > myArtifact.txt
-    ls
-  workingDirectory: $(Build.SourcesDirectory)
-  displayName: Generate some txt file
-
-- publish: $(Build.SourcesDirectory)/myArtifact.txt
-  artifact: 'My Artifact txt file'
-  displayName: Publish my artifact txt file
+  # https://github.com/tonerdo/coverlet#net-global-tool-guide
+  # https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
+  # tests/core/Rezare.rSite.Domain.Tests/
+  - script: coverlet tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
+    displayName: Run Coverlet to get code coverage. Seems to only work on Non-Windows machine.
+  
+  - script: |
+      cat $(Build.SourcesDirectory)/coverage.cobertura.xml
+    displayName: 'coverage.cobertura.xml contents'
+  
+  - script: |
+      echo $(Build.SourcesDirectory)
+      ls $(Build.SourcesDirectory)
+      find tests/core/Rezare.rSite.Domain.Tests
+    displayName: 'Contents of $(Build.SourcesDirectory)'
+  
+  - script: |
+      echo $(Agent.TempDirectory)
+      ls $(Agent.TempDirectory)
+    displayName: 'Contents of $(Agent.TempDirectory)'
+  
+  - script: |
+      echo $(Build.SourcesDirectory)
+      ls $(Build.SourcesDirectory)
+    displayName: 'Contents of $(Build.SourcesDirectory)'
+  
+  - script: |
+      echo $(Build.ArtifactStagingDirectory)
+      ls $(Build.ArtifactStagingDirectory)
+    displayName: 'Contents of $(Build.ArtifactStagingDirectory)'
+  
+  - script: |
+      echo $(Build.StagingDirectory)
+      ls $(Build.StagingDirectory)
+    displayName: 'Contents of $(Build.StagingDirectory)'
+  
+  - script: |
+      echo $(System.DefaultWorkingDirectory)
+      ls $(System.DefaultWorkingDirectory)
+    displayName: 'Contents of $(System.DefaultWorkingDirectory)'
+  
+  - script: reportgenerator -reports:$(Build.SourcesDirectory)/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
+    displayName: 'Create reports.'
+  
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: $(Build.SourcesDirectory)/coverage.cobertura.xml
+  
+  - script: |
+      find .
+    displayName: 'Output all Contents'
+  
+  # Mutation Testing
+  - script: dotnet stryker -tr dotnettest -r "['cleartext', 'html', 'progress']"
+    workingDirectory: '$(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
+    displayName: 'Run Stryker on $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/'
+  
+  - script: cat $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/*/reports/mutation-report.html
+  
+  # Publish the results
+  # Currently Stryker does not have a publish task: https://github.com/stryker-mutator/azure-devops-mutationreport-publisher
+  # Azure DevOps has yet to get static html publishing: https://developercommunity.visualstudio.com/content/idea/491426/support-for-generic-html-publishing-inside-build-a.html
+  # publish is a shortcut for PublishPipelineArtifact: https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml
+  - publish: $(Build.SourcesDirectory)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/
+    artifact: 'Mutation Report'
+    displayName: Get Stryker Html file
+  
+  - script: |
+      echo "hello, I am a pipeline artifact" > myArtifact.txt
+      ls
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: Generate some txt file
+  
+  - publish: $(Build.SourcesDirectory)/myArtifact.txt
+    artifact: 'My Artifact txt file'
+    displayName: Publish my artifact txt file
+  
