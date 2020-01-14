@@ -47,7 +47,25 @@ jobs:
       version: 2.1.607
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
+# Restore NuGet packages
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages for $(solution)'
+    inputs:
+      command: 'restore'
+      projects: '$(solution)'
+      verbosityRestore: 'detailed'
 
+# Build the solution
+  - task: DotNetCoreCLI@2
+    displayName: 'Build $(solution)'
+    inputs:
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '--configuration $(buildConfiguration)'
+
+- job: 'codecoverage'
+  displayName: 'Code Coverage'
+  steps:
 
 # DotNetCoreInstaller is now deprecated
 #- task: DotNetCoreInstaller@1
@@ -85,22 +103,6 @@ jobs:
       custom: tool
       arguments: update -g dotnet-stryker
     displayName: Update (or install) Stryker Mutator
-
-# Restore NuGet packages
-  - task: DotNetCoreCLI@2
-    displayName: 'Restore NuGet packages for $(solution)'
-    inputs:
-      command: 'restore'
-      projects: '$(solution)'
-      verbosityRestore: 'detailed'
-
-# Build the solution
-  - task: DotNetCoreCLI@2
-    displayName: 'Build $(solution)'
-    inputs:
-      command: 'build'
-      projects: '$(solution)'
-      arguments: '--configuration $(buildConfiguration)'
 
 #- task: DotNetCoreCLI@2
 #  displayName: 'Publish'
