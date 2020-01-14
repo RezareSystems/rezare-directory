@@ -63,11 +63,19 @@ jobs:
       projects: '$(solution)'
       arguments: '--configuration $(buildConfiguration)'
 
-
+  - publish: $(System.DefaultWorkingDirectory)/src
+    artifact: 'rSite built src'
 
 - job: codecoverage
   displayName: 'Code Coverage'
   dependsOn: build
+
+  # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
+  pool: Default
+  #  vmimage: 'windows-latest'
+  #  Default
+  #  vmImage: 'ubuntu-latest'
+  #  vmImage: macOS-latest
 
   variables:
     solution: 'Rezare.rSite.sln'
