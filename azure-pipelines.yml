@@ -76,6 +76,29 @@ jobs:
       version: 3.1.100
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 2.1.607'
+    inputs:
+      packageType: sdk
+      version: 2.1.607
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# Restore NuGet packages
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages for $(solution)'
+    inputs:
+      command: 'restore'
+      projects: '$(solution)'
+      verbosityRestore: 'detailed'
+
+# Build the solution
+  - task: DotNetCoreCLI@2
+    displayName: 'Build $(solution)'
+    inputs:
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '--configuration $(buildConfiguration)'
+
 # DotNetCoreInstaller is now deprecated
 #- task: DotNetCoreInstaller@1
 #  displayName: 'Use .NET Core sdk 3.1.100'
