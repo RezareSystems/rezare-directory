@@ -76,13 +76,6 @@ jobs:
       version: 3.1.100
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
-  - task: UseDotNet@2
-    displayName: 'Install .Net Core sdk 2.1.607'
-    inputs:
-      packageType: sdk
-      version: 2.1.607
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-
 # DotNetCoreInstaller is now deprecated
 #- task: DotNetCoreInstaller@1
 #  displayName: 'Use .NET Core sdk 3.1.100'
