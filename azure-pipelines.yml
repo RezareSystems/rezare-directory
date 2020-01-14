@@ -7,7 +7,7 @@
 #- develop
 
 jobs:
-- job: 'build'
+- job: build
   displayName: 'Build the test solution'
 
   # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
@@ -65,8 +65,15 @@ jobs:
 
 
 
-- job: 'codecoverage'
+- job: codecoverage
   displayName: 'Code Coverage'
+  dependsOn: build
+
+  variables:
+    solution: 'Rezare.rSite.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Debug'
+
   steps:
 
   - task: UseDotNet@2
