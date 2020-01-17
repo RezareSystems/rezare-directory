@@ -78,6 +78,12 @@ jobs:
     buildConfiguration: 'Debug'
 
   steps:
+  - download: current
+    artifact: 'rSite built src'
+
+  - script: |
+      find .
+    displayName: 'Output all Contents'
 
   - task: UseDotNet@2
     displayName: 'Install .Net Core sdk 3.1.100'
