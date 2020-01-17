@@ -56,8 +56,8 @@ jobs:
       projects: '$(solution)'
       arguments: '--configuration $(buildConfiguration)'
 
-  - publish: $(System.DefaultWorkingDirectory)/src
-    artifact: 'rSite built src'
+  - publish: $(System.DefaultWorkingDirectory)
+    artifact: 'rSite built code'
 
 
 
@@ -78,8 +78,10 @@ jobs:
     buildConfiguration: 'Debug'
 
   steps:
+  # downloads to $(Pipeline.Workspace)
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#download
   - download: current
-    artifact: 'rSite built src'
+    artifact: 'rSite built code'
 
   - script: |
       find .
@@ -98,22 +100,6 @@ jobs:
       packageType: sdk
       version: 2.1.607
       installationPath: $(Agent.ToolsDirectory)/dotnet
-
-# Restore NuGet packages
-  - task: DotNetCoreCLI@2
-    displayName: 'Restore NuGet packages for $(solution)'
-    inputs:
-      command: 'restore'
-      projects: '$(solution)'
-      verbosityRestore: 'detailed'
-
-# Build the solution
-  - task: DotNetCoreCLI@2
-    displayName: 'Build $(solution)'
-    inputs:
-      command: 'build'
-      projects: '$(solution)'
-      arguments: '--configuration $(buildConfiguration)'
 
 # DotNetCoreInstaller is now deprecated
 #- task: DotNetCoreInstaller@1
@@ -155,7 +141,7 @@ jobs:
     displayName: 'Run tests for $(solution) with Cobertura'
     inputs:
       command: test
-      projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+      projects: '$(Pipeline.Workspace)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
       arguments: -c $(buildConfiguration)
     #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
 #--logger "trx;LogFileName=TestResults.trx" 
@@ -173,21 +159,21 @@ jobs:
   # https://github.com/tonerdo/coverlet#net-global-tool-guide
   # https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
   # tests/core/Rezare.rSite.Domain.Tests/
-  - script: coverlet tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
+  - script: coverlet $(Pipeline.Workspace)/tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
     displayName: Run Coverlet to get code coverage. Seems to only work on Non-Windows machine.
   
   - script: |
-      cat $(Build.SourcesDirectory)/coverage.cobertura.xml
+      cat $(Pipeline.Workspace)/coverage.cobertura.xml
     displayName: 'coverage.cobertura.xml contents'
   
-  - script: reportgenerator -reports:$(Build.SourcesDirectory)/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
+  - script: reportgenerator -reports:$(Pipeline.Workspace)/coverage.cobertura.xml -targetdir:$(Pipeline.Workspace)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
     displayName: 'Create reports.'
   
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverage.cobertura.xml
+      summaryFileLocation: $(Pipeline.Workspace)/coverage.cobertura.xml
 
 
 
