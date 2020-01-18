@@ -11,8 +11,8 @@ jobs:
   displayName: 'Build the test solution'
 
   # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
-  pool: Default
-  #  vmimage: 'windows-latest'
+  pool: #Default
+    vmimage: 'windows-latest'
   #  Default
   #  vmImage: 'ubuntu-latest'
   #  vmImage: macOS-latest
