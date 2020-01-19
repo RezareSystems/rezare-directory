@@ -87,7 +87,6 @@ jobs:
   - script: |
       echo $(Build.SourcesDirectory)
       ls $(Build.SourcesDirectory)
-      find tests/core/Rezare.rSite.Domain.Tests
     displayName: Contents of $(Build.SourcesDirectory) with find
 
   # downloads to $(Pipeline.Workspace)
