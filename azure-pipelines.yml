@@ -15,6 +15,7 @@ pool: #Default
 #  vmImage: 'ubuntu-latest'
 #  vmImage: macOS-latest
 
+# variables have a scope based on where they are included: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#set-variables-in-pipeline
 variables:
   solution: 'Rezare.rSite.sln'
   buildPlatform: 'Any CPU'
