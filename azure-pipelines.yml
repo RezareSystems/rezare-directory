@@ -3,6 +3,11 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+# Syntax Recommendations
+# Should displayName text be wrapped in single quotes? Can't seem to find anything that says either way, the examples here:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops
+# use both unquoted strings and single quotes
+
 #trigger:
 #- develop
 
@@ -64,6 +69,7 @@ jobs:
 # It is assumed that on a self-hosted agent publishing an artifact with the same name will overwrite the previous artifact.
   - publish: $(System.DefaultWorkingDirectory)
     artifact: $(buildArtifactName)
+    displayName: Publish artifact $(buildArtifactName)
 
 
 
@@ -75,10 +81,17 @@ jobs:
     buildArtifact: '$(Pipeline.Workspace)/$(buildArtifactName)'
 
   steps:
+  - script: |
+      echo $(Build.SourcesDirectory)
+      ls $(Build.SourcesDirectory)
+      find tests/core/Rezare.rSite.Domain.Tests
+    displayName: Contents of $(Build.SourcesDirectory) with find
+
   # downloads to $(Pipeline.Workspace)
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#download
   - download: current
     artifact: $(buildArtifactName)
+    displayName: Download artifact $(buildArtifactName)
 
   - script: |
       echo $(Pipeline.Workspace)
@@ -259,7 +272,7 @@ jobs:
       echo $(Build.SourcesDirectory)
       ls $(Build.SourcesDirectory)
       find tests/core/Rezare.rSite.Domain.Tests
-    displayName: 'Contents of $(Build.SourcesDirectory)'
+    displayName: Contents of $(Build.SourcesDirectory) with find
   
   - script: |
       echo $(Agent.TempDirectory)
