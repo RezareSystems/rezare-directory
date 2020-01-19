@@ -6,21 +6,24 @@
 #trigger:
 #- develop
 
+# Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
+# pool can be defined at the root level, which applies it to every job: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml#specify-stages
+# or at the job level
+pool: #Default
+  vmimage: 'ubuntu-latest'
+#  Default
+#  vmImage: 'ubuntu-latest'
+#  vmImage: macOS-latest
+
+variables:
+  solution: 'Rezare.rSite.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Debug'
+  buildArtifactName: 'rSiteBuiltCode'
+
 jobs:
 - job: build
   displayName: 'Build the test solution'
-
-  # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
-  pool: #Default
-    vmimage: 'ubuntu-latest'
-  #  Default
-  #  vmImage: 'ubuntu-latest'
-  #  vmImage: macOS-latest
-
-  variables:
-    solution: 'Rezare.rSite.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Debug'
 
 #- script: dotnet build --configuration $(buildConfiguration)
 #  displayName: 'dotnet build $(buildConfiguration)'
@@ -59,7 +62,7 @@ jobs:
 # On a self-hosted agent artifacts are kept between runs, where as on a Microsoft-hosted agent they are not kept.
 # It is assumed that on a self-hosted agent publishing an artifact with the same name will overwrite the previous artifact.
   - publish: $(System.DefaultWorkingDirectory)
-    artifact: 'rSiteBuiltCode'
+    artifact: $(buildArtifactName)
 
 
 
@@ -67,24 +70,14 @@ jobs:
   displayName: 'Code Coverage'
   dependsOn: build
 
-  # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
-  pool: Default
-  #  vmimage: 'windows-latest'
-  #  Default
-  #  vmImage: 'ubuntu-latest'
-  #  vmImage: macOS-latest
-
   variables:
-    solution: 'Rezare.rSite.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Debug'
-    buildArtifact: '$(Pipeline.Workspace)/rSiteBuiltCode'
+    buildArtifact: '$(Pipeline.Workspace)/$(buildArtifactName)'
 
   steps:
   # downloads to $(Pipeline.Workspace)
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#download
   - download: current
-    artifact: 'rSiteBuiltCode'
+    artifact: $(buildArtifactName)
 
   - script: |
       echo $(Pipeline.Workspace)
@@ -192,20 +185,7 @@ jobs:
   displayName: 'Mutation Testing'
   dependsOn: build
 
-  # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
-  pool: Default
-  #  vmimage: 'windows-latest'
-  #  Default
-  #  vmImage: 'ubuntu-latest'
-  #  vmImage: macOS-latest
-
-  variables:
-    solution: 'Rezare.rSite.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Debug'
-
   steps:
-
   - task: UseDotNet@2
     displayName: 'Install .Net Core sdk 3.1.100'
     inputs:
@@ -272,18 +252,6 @@ jobs:
 - job: displayfiles
   displayName: 'Display Files'
   dependsOn: build
-
-  # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
-  pool: Default
-  #  vmimage: 'windows-latest'
-  #  Default
-  #  vmImage: 'ubuntu-latest'
-  #  vmImage: macOS-latest
-
-  variables:
-    solution: 'Rezare.rSite.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Debug'
 
   steps:
   - script: |
