@@ -81,6 +81,9 @@ jobs:
     buildArtifact: '$(Pipeline.Workspace)/$(buildArtifactName)'
 
   steps:
+  # the git source code is not checked out as it is not used
+  - checkout: none
+
   - script: |
       echo $(Build.SourcesDirectory)
       ls $(Build.SourcesDirectory)
