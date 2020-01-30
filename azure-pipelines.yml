@@ -72,6 +72,12 @@ jobs:
     artifact: $(buildArtifactName)
     displayName: Publish artifact $(buildArtifactName)
 
+#- task: DotNetCoreCLI@2
+#  displayName: 'Publish'
+#  inputs:
+#    command: publish
+#    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+
 
 
 - job: codecoverage
@@ -85,26 +91,11 @@ jobs:
   # the git source code is not checked out as it is not used
   - checkout: none
 
-  - script: |
-      echo $(Build.SourcesDirectory)
-      ls $(Build.SourcesDirectory)
-    displayName: Contents of $(Build.SourcesDirectory) with find
-
   # downloads to $(Pipeline.Workspace)
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#download
   - download: current
     artifact: $(buildArtifactName)
     displayName: Download artifact $(buildArtifactName)
-
-  - script: |
-      echo $(Pipeline.Workspace)
-      ls $(Pipeline.Workspace)
-    displayName: 'Contents of $(Pipeline.Workspace)'
-
-  - script: |
-      echo 'find $(Pipeline.Workspace)'
-      find $(Pipeline.Workspace)
-    displayName: 'Find in $(Pipeline.Workspace)'
 
   - task: UseDotNet@2
     displayName: 'Install .Net Core sdk 3.1.100'
@@ -149,18 +140,13 @@ jobs:
       arguments: update -g coverlet.console
     displayName: Update (or install) Coverlet
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Publish'
-#  inputs:
-#    command: publish
-#    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
-
 # Test the built solution
   - task: DotNetCoreCLI@2
     displayName: 'Run tests for $(solution) with Cobertura'
     inputs:
       command: test
-      projects: '$(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+      #projects: '$(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+      projects: '$(buildArtifact)/tests/**/*.csproj'
       arguments: -c $(buildConfiguration)
     #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
 #--logger "trx;LogFileName=TestResults.trx" 
@@ -180,11 +166,7 @@ jobs:
   # tests/core/Rezare.rSite.Domain.Tests/
   - script: coverlet $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
     displayName: Run Coverlet to get code coverage
-  
-#  - script: |
-#      cat $(Build.SourcesDirectory)/coverage.cobertura.xml
-#    displayName: 'coverage.cobertura.xml contents'
-  
+
   - script: reportgenerator -reports:$(Build.SourcesDirectory)/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
     displayName: 'Create reports'
   
@@ -193,8 +175,6 @@ jobs:
     inputs:
       codeCoverageTool: Cobertura
       summaryFileLocation: $(Build.SourcesDirectory)/coverage.cobertura.xml
-
-
 
 
 
@@ -265,6 +245,16 @@ jobs:
 
   steps:
   - script: |
+      echo $(Pipeline.Workspace)
+      ls $(Pipeline.Workspace)
+    displayName: 'Contents of $(Pipeline.Workspace)'
+
+  - script: |
+      echo 'find $(Pipeline.Workspace)'
+      find $(Pipeline.Workspace)
+    displayName: 'Find in $(Pipeline.Workspace)'
+
+  - script: |
       echo $(Build.SourcesDirectory)
       ls $(Build.SourcesDirectory)
       find tests/core/Rezare.rSite.Domain.Tests
@@ -279,7 +269,7 @@ jobs:
       echo $(Build.SourcesDirectory)
       ls $(Build.SourcesDirectory)
     displayName: 'Contents of $(Build.SourcesDirectory)'
-  
+
   - script: |
       echo $(Build.ArtifactStagingDirectory)
       ls $(Build.ArtifactStagingDirectory)
