@@ -13,7 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="CSharpGuidelinesAnalyzer" Version="3.2.0">
+    <PackageReference Include="CSharpGuidelinesAnalyzer" Version="3.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -28,15 +28,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ReflectionAnalyzers" Version="0.1.20-dev">
+    <PackageReference Include="ReflectionAnalyzers" Version="0.1.21-dev">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="2.2.0">
+    <PackageReference Include="Roslynator.Analyzers" Version="2.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -44,11 +44,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SecurityCodeScan.VS2017" Version="3.3.0">
+    <PackageReference Include="SecurityCodeScan.VS2017" Version="3.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.0.0.9566">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.2.0.14119">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -59,7 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.66">
+    <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.113">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
