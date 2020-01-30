@@ -183,7 +183,7 @@ jobs:
 
 
 
-- job: codecoverage
+- job: codecoveragevstest
   displayName: 'Code Coverage using vstest'
   dependsOn: build
 
