@@ -173,6 +173,10 @@ jobs:
 #  - script: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
 #    displayName: 'Create reports'
   
+  - script: |
+      find .
+    displayName: 'Output all Contents'
+
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
     inputs:
