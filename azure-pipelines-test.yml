@@ -148,13 +148,10 @@ jobs:
     displayName: 'Run tests for $(solution) with Cobertura'
     inputs:
       command: test
-      #projects: '$(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
       projects: '$(buildArtifact)/tests/**/*.csproj'
       arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage" 
-    #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
-#--logger "trx;LogFileName=TestResults.trx" 
-#            --logger "xunit;LogFileName=TestResults.xml"
-#            --results-directory ./BuildReports/UnitTests
+            --logger "xunit;LogFileName=TestResults.xml"
+            --results-directory ./BuildReports
 #            /p:CollectCoverage=true
 #            /p:CoverletOutput=BuildReports/Coverage/
 #            /p:CoverletOutputFormat=cobertura
@@ -191,7 +188,7 @@ jobs:
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+      summaryFileLocation: './BuildReports/coverage.cobertura.xml'
 
 
 
