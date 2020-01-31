@@ -100,13 +100,6 @@ jobs:
     artifact: $(buildArtifactName)
     displayName: Download artifact $(buildArtifactName)
 
-  - task: UseDotNet@2
-    displayName: 'Install .Net Core sdk 3.1.100'
-    inputs:
-      packageType: sdk
-      version: 3.1.100
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-
 # Install needed tools. These tools are installed as global tools rather than to a specific tool-path
 # DotNet SDK 3 is used so that the update command can be used, so that the task doesn't throw an error if the tool is already installed.
 # This is done instead of using continueOnError
