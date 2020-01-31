@@ -107,13 +107,6 @@ jobs:
       version: 3.1.100
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
-  - task: UseDotNet@2
-    displayName: 'Install .Net Core sdk 2.1.607'
-    inputs:
-      packageType: sdk
-      version: 2.1.607
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-
 # DotNetCoreInstaller is now deprecated
 #- task: DotNetCoreInstaller@1
 #  displayName: 'Use .NET Core sdk 3.1.100'
@@ -126,14 +119,6 @@ jobs:
 # Could potentially use jobs rather than steps to continue on error or do another task:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml
 # Merge for using upgrade to install if not already installed: https://github.com/dotnet/cli/pull/10205
-
-# https://github.com/danielpalme/ReportGenerator
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: custom
-      custom: tool
-      arguments: update -g dotnet-reportgenerator-globaltool
-    displayName: Update (or install) ReportGenerator
 
 # # https://github.com/tonerdo/coverlet
 #   - task: DotNetCoreCLI@2
@@ -185,7 +170,7 @@ jobs:
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: cobertura
-      summaryFileLocation: '**/coverage.cobertura.xml'
+      summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 
 
