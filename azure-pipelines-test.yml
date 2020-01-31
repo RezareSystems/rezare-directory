@@ -42,7 +42,6 @@ jobs:
 # This states that this task can be used to change the version of .NET Core used in subsequent tasks like .NET Core cli task.
 # version options: https://github.com/dotnet/core/blob/master/release-notes/releases-index.json
   steps:
-
   - task: UseDotNet@2
     displayName: 'Install .Net Core sdk 3.1.100'
     inputs:
@@ -72,14 +71,6 @@ jobs:
     artifact: $(buildArtifactName)
     displayName: Publish artifact $(buildArtifactName)
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Publish'
-#  inputs:
-#    command: publish
-#    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
-
-
-
 
 
 
@@ -100,36 +91,20 @@ jobs:
     artifact: $(buildArtifactName)
     displayName: Download artifact $(buildArtifactName)
 
-# Install needed tools. These tools are installed as global tools rather than to a specific tool-path
-# DotNet SDK 3 is used so that the update command can be used, so that the task doesn't throw an error if the tool is already installed.
-# This is done instead of using continueOnError
-# Could potentially use jobs rather than steps to continue on error or do another task:
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml
-# Merge for using upgrade to install if not already installed: https://github.com/dotnet/cli/pull/10205
+  # Used to run the dotnetcorecli test command
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 3.1.100'
+    inputs:
+      packageType: sdk
+      version: 3.1.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet
 
-  - script: |
-      echo 'find $(Agent.TempDirectory)'
-      find $(Agent.TempDirectory)
-    displayName: 'Find in $(Agent.TempDirectory)'
-
-# Test the built solution
   - task: DotNetCoreCLI@2
     displayName: 'Run tests for $(solution) with Cobertura'
     inputs:
       command: test
       projects: '$(buildArtifact)/tests/**/*.csproj'
       arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
-      nobuild: true
-
-  - script: |
-      echo 'find $(Agent.TempDirectory)'
-      find $(Agent.TempDirectory)
-    displayName: 'Find in $(Agent.TempDirectory)'
-
-  - script: |
-      echo 'find $(Pipeline.Workspace)'
-      find $(Pipeline.Workspace)
-    displayName: 'Find in $(Pipeline.Workspace)'
 
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
