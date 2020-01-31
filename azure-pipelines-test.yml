@@ -178,6 +178,11 @@ jobs:
     displayName: 'Output all Contents'
 
   - script: |
+      echo 'find $(Agent.TempDirectory)'
+      find $(Agent.TempDirectory)
+    displayName: 'Find in $(Agent.TempDirectory)'
+
+  - script: |
       echo 'find $(Pipeline.Workspace)'
       find $(Pipeline.Workspace)
     displayName: 'Find in $(Pipeline.Workspace)'
