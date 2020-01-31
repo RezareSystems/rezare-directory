@@ -179,6 +179,108 @@ jobs:
 
 
 
+
+
+- job: codecoverage_xplat
+  displayName: 'Code Coverage'
+  dependsOn: build
+
+  variables:
+    buildArtifact: '$(Pipeline.Workspace)/$(buildArtifactName)'
+
+  steps:
+  # the git source code is not checked out as it is not used
+  - checkout: none
+
+  # downloads to $(Pipeline.Workspace)
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#download
+  - download: current
+    artifact: $(buildArtifactName)
+    displayName: Download artifact $(buildArtifactName)
+
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 3.1.100'
+    inputs:
+      packageType: sdk
+      version: 3.1.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 2.1.607'
+    inputs:
+      packageType: sdk
+      version: 2.1.607
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# DotNetCoreInstaller is now deprecated
+#- task: DotNetCoreInstaller@1
+#  displayName: 'Use .NET Core sdk 3.1.100'
+#  inputs:
+#    version: 3.1.100
+
+# Install needed tools. These tools are installed as global tools rather than to a specific tool-path
+# DotNet SDK 3 is used so that the update command can be used, so that the task doesn't throw an error if the tool is already installed.
+# This is done instead of using continueOnError
+# Could potentially use jobs rather than steps to continue on error or do another task:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml
+# Merge for using upgrade to install if not already installed: https://github.com/dotnet/cli/pull/10205
+
+# https://github.com/danielpalme/ReportGenerator
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: custom
+      custom: tool
+      arguments: update -g dotnet-reportgenerator-globaltool
+    displayName: Update (or install) ReportGenerator
+
+# # https://github.com/tonerdo/coverlet
+#   - task: DotNetCoreCLI@2
+#     inputs:
+#       command: custom
+#       custom: tool
+#       arguments: update -g coverlet.console
+#     displayName: Update (or install) Coverlet
+
+# Test the built solution
+  - task: DotNetCoreCLI@2
+    displayName: 'Run tests for $(solution) with Cobertura'
+    inputs:
+      command: test
+      #projects: '$(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+      projects: '$(buildArtifact)/tests/**/*.csproj'
+      arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
+    #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
+#--logger "trx;LogFileName=TestResults.trx" 
+#            --logger "xunit;LogFileName=TestResults.xml"
+#            --results-directory ./BuildReports/UnitTests
+#            /p:CollectCoverage=true
+#            /p:CoverletOutput=BuildReports/Coverage/
+#            /p:CoverletOutputFormat=cobertura
+#            /p:Exclude="[xunit.*]*
+    #nobuild: true
+
+    #arguments: -c $(BuildConfiguration) --settings $(System.DefaultWorkingDirectory)/CodeCoverage.runsettings --collect:"XPlat Code Coverage" --RunConfiguration.DisableAppDomain=true
+    #arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+
+  # https://github.com/tonerdo/coverlet#net-global-tool-guide
+  # https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
+  # tests/core/Rezare.rSite.Domain.Tests/
+  # - script: coverlet $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
+  #   displayName: Run Coverlet to get code coverage
+
+  - script: reportgenerator -reports:$(Build.SourcesDirectory)/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
+    displayName: 'Create reports'
+  
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: $(Build.SourcesDirectory)/coverage.cobertura.xml
+
+
+
+
+
 - job: mutationtesting
   displayName: 'Mutation Testing'
   dependsOn: build
