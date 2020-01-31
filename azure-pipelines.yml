@@ -268,14 +268,14 @@ jobs:
   # - script: coverlet $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
   #   displayName: Run Coverlet to get code coverage
 
-  - script: reportgenerator -reports:$(Build.SourcesDirectory)/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
-    displayName: 'Create reports'
+#  - script: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
+#    displayName: 'Create reports'
   
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverage.cobertura.xml
+      summaryFileLocation: '**/coverage.cobertura.xml'
 
 
 
@@ -338,6 +338,9 @@ jobs:
   - publish: $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/StrykerOutput/
     artifact: 'Mutation Report'
     displayName: Get Stryker Html file
+
+
+
 
 
 
