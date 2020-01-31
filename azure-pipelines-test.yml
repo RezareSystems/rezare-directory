@@ -149,19 +149,16 @@ jobs:
     inputs:
       command: test
       projects: '$(buildArtifact)/tests/**/*.csproj'
-      arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage" 
-            --logger "xunit;LogFileName=TestResults.xml"
-            --results-directory ./BuildReports
+      arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
+#            --logger "xunit;LogFileName=TestResults.xml"
+#            --results-directory ./BuildReports
 #            /p:CollectCoverage=true
 #            /p:CoverletOutput=BuildReports/Coverage/
 #            /p:CoverletOutputFormat=cobertura
 #            /p:Exclude="[xunit.*]*
     #nobuild: true
 
-    #arguments: -c $(BuildConfiguration) --settings $(System.DefaultWorkingDirectory)/CodeCoverage.runsettings --collect:"XPlat Code Coverage" --RunConfiguration.DisableAppDomain=true
-    #arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
-
-  # https://github.com/tonerdo/coverlet#net-global-tool-guide
+    # https://github.com/tonerdo/coverlet#net-global-tool-guide
   # https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
   # tests/core/Rezare.rSite.Domain.Tests/
   # - script: coverlet $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
@@ -187,8 +184,8 @@ jobs:
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
     inputs:
-      codeCoverageTool: Cobertura
-      summaryFileLocation: './BuildReports/coverage.cobertura.xml'
+      codeCoverageTool: cobertura
+      summaryFileLocation: '**/coverage.cobertura.xml'
 
 
 
