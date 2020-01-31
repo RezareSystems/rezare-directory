@@ -1,0 +1,183 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+# Syntax Recommendations
+# Should displayName text be wrapped in single quotes? Can't seem to find anything that says either way, the examples here:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops
+# use both unquoted strings and single quotes
+
+#trigger:
+#- develop
+
+# Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
+# pool can be defined at the root level, which applies it to every job: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml#specify-stages
+# or at the job level
+pool: #Default
+  vmimage: 'ubuntu-latest'
+#  Default
+#  vmImage: 'ubuntu-latest'
+#  vmImage: macOS-latest
+
+# variables have a scope based on where they are included: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#set-variables-in-pipeline
+variables:
+  solution: 'Rezare.rSite.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Debug'
+  buildArtifactName: 'rSiteBuiltCode'
+  buildArtifact: '$(Pipeline.Workspace)/$(buildArtifactName)'
+
+jobs:
+- job: build
+  displayName: 'Build the test solution'
+
+#- script: dotnet build --configuration $(buildConfiguration)
+#  displayName: 'dotnet build $(buildConfiguration)'
+
+# The @2 is version 2 of DotNetCoreCLI
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/tasks?view=azure-devops&tabs=yaml&viewFallbackFrom=vsts#task-versions
+
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
+# This states that this task can be used to change the version of .NET Core used in subsequent tasks like .NET Core cli task.
+# version options: https://github.com/dotnet/core/blob/master/release-notes/releases-index.json
+  steps:
+
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 3.1.100'
+    inputs:
+      packageType: sdk
+      version: 3.1.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# Restore NuGet packages
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages for $(solution)'
+    inputs:
+      command: 'restore'
+      projects: '$(solution)'
+      verbosityRestore: 'detailed'
+
+# Build the solution
+  - task: DotNetCoreCLI@2
+    displayName: 'Build $(solution)'
+    inputs:
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '--configuration $(buildConfiguration)'
+
+# On a self-hosted agent artifacts are kept between runs, where as on a Microsoft-hosted agent they are not kept.
+# It is assumed that on a self-hosted agent publishing an artifact with the same name will overwrite the previous artifact.
+  - publish: $(System.DefaultWorkingDirectory)
+    artifact: $(buildArtifactName)
+    displayName: Publish artifact $(buildArtifactName)
+
+#- task: DotNetCoreCLI@2
+#  displayName: 'Publish'
+#  inputs:
+#    command: publish
+#    projects: 'tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+
+
+
+
+
+
+- job: codecoverage_xplat
+  displayName: 'Code Coverage'
+  dependsOn: build
+
+  variables:
+    buildArtifact: '$(Pipeline.Workspace)/$(buildArtifactName)'
+
+  steps:
+  # the git source code is not checked out as it is not used
+  - checkout: none
+
+  # downloads to $(Pipeline.Workspace)
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema#download
+  - download: current
+    artifact: $(buildArtifactName)
+    displayName: Download artifact $(buildArtifactName)
+
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 3.1.100'
+    inputs:
+      packageType: sdk
+      version: 3.1.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: UseDotNet@2
+    displayName: 'Install .Net Core sdk 2.1.607'
+    inputs:
+      packageType: sdk
+      version: 2.1.607
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# DotNetCoreInstaller is now deprecated
+#- task: DotNetCoreInstaller@1
+#  displayName: 'Use .NET Core sdk 3.1.100'
+#  inputs:
+#    version: 3.1.100
+
+# Install needed tools. These tools are installed as global tools rather than to a specific tool-path
+# DotNet SDK 3 is used so that the update command can be used, so that the task doesn't throw an error if the tool is already installed.
+# This is done instead of using continueOnError
+# Could potentially use jobs rather than steps to continue on error or do another task:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml
+# Merge for using upgrade to install if not already installed: https://github.com/dotnet/cli/pull/10205
+
+# https://github.com/danielpalme/ReportGenerator
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: custom
+      custom: tool
+      arguments: update -g dotnet-reportgenerator-globaltool
+    displayName: Update (or install) ReportGenerator
+
+# # https://github.com/tonerdo/coverlet
+#   - task: DotNetCoreCLI@2
+#     inputs:
+#       command: custom
+#       custom: tool
+#       arguments: update -g coverlet.console
+#     displayName: Update (or install) Coverlet
+
+# Test the built solution
+  - task: DotNetCoreCLI@2
+    displayName: 'Run tests for $(solution) with Cobertura'
+    inputs:
+      command: test
+      #projects: '$(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
+      projects: '$(buildArtifact)/tests/**/*.csproj'
+      arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
+    #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
+#--logger "trx;LogFileName=TestResults.trx" 
+#            --logger "xunit;LogFileName=TestResults.xml"
+#            --results-directory ./BuildReports/UnitTests
+#            /p:CollectCoverage=true
+#            /p:CoverletOutput=BuildReports/Coverage/
+#            /p:CoverletOutputFormat=cobertura
+#            /p:Exclude="[xunit.*]*
+    #nobuild: true
+
+    #arguments: -c $(BuildConfiguration) --settings $(System.DefaultWorkingDirectory)/CodeCoverage.runsettings --collect:"XPlat Code Coverage" --RunConfiguration.DisableAppDomain=true
+    #arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+
+  # https://github.com/tonerdo/coverlet#net-global-tool-guide
+  # https://github.com/tonerdo/coverlet/blob/master/Documentation/GlobalTool.md
+  # tests/core/Rezare.rSite.Domain.Tests/
+  # - script: coverlet $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/bin/$(buildConfiguration)/netcoreapp3.1/Rezare.rSite.Domain.Tests.dll --target "dotnet" --targetargs "test $(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests --no-build" --format cobertura
+  #   displayName: Run Coverlet to get code coverage
+
+#  - script: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:HtmlInline_AzurePipelines
+#    displayName: 'Create reports'
+  
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '**/coverage.cobertura.xml'
+
+
+
