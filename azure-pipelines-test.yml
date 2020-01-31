@@ -126,10 +126,7 @@ jobs:
       command: test
       projects: '$(buildArtifact)/tests/**/*.csproj'
       arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
-
-  - script: |
-      find .
-    displayName: 'Output all Contents'
+      nobuild: true
 
   - script: |
       echo 'find $(Agent.TempDirectory)'
