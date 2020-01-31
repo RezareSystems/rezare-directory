@@ -14,8 +14,8 @@
 # Available Microsoft-hosted agents can be found here: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
 # pool can be defined at the root level, which applies it to every job: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/stages?view=azure-devops&tabs=yaml#specify-stages
 # or at the job level
-pool: #Default
-  vmimage: 'ubuntu-latest'
+pool: Default
+#  vmimage: 'ubuntu-latest'
 #  Default
 #  vmImage: 'ubuntu-latest'
 #  vmImage: macOS-latest
