@@ -150,7 +150,7 @@ jobs:
       command: test
       #projects: '$(buildArtifact)/tests/core/Rezare.rSite.Domain.Tests/*.csproj'
       projects: '$(buildArtifact)/tests/**/*.csproj'
-      arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage" -r $(Build.SourcesDirectory)
+      arguments: -c $(buildConfiguration) -r $(Build.SourcesDirectory) --collect:"XPlat Code Coverage"
     #arguments: -c $(buildConfiguration) --collect:"XPlat Code Coverage"
 #--logger "trx;LogFileName=TestResults.trx" 
 #            --logger "xunit;LogFileName=TestResults.xml"
