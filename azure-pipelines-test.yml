@@ -191,7 +191,7 @@ jobs:
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: '**/coverage.cobertura.xml'
+      summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 
 
