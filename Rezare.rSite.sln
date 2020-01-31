@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rezare.rSite.Persistence", "src\infrastructure\Rezare.rSite.Persistence\Rezare.rSite.Persistence.csproj", "{8F5CAF30-E20C-4C4E-91FA-4205E94552E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rezare.rSite.Domain.MoreTests", "tests\core\Rezare.rSite.Domain.MoreTests\Rezare.rSite.Domain.MoreTests.csproj", "{36DE3FFC-7544-4A75-8B1D-ADC56182D144}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{8F5CAF30-E20C-4C4E-91FA-4205E94552E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F5CAF30-E20C-4C4E-91FA-4205E94552E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F5CAF30-E20C-4C4E-91FA-4205E94552E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DE3FFC-7544-4A75-8B1D-ADC56182D144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DE3FFC-7544-4A75-8B1D-ADC56182D144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DE3FFC-7544-4A75-8B1D-ADC56182D144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DE3FFC-7544-4A75-8B1D-ADC56182D144}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{B66B59D6-486D-4988-AA5C-E2B148DFA2BB} = {E513FA3C-0FC5-45EA-AB52-03E8300ACB08}
 		{6807EF01-B893-49A1-AD31-B6F42536C272} = {B66B59D6-486D-4988-AA5C-E2B148DFA2BB}
 		{8F5CAF30-E20C-4C4E-91FA-4205E94552E7} = {8EA5C949-A5BC-4996-83B2-8F28DBA651D8}
+		{36DE3FFC-7544-4A75-8B1D-ADC56182D144} = {C422173E-6ABB-48E9-A1EB-8AB900F00CAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1188FA3E-7135-4A99-AB76-85EE2C90975C}
