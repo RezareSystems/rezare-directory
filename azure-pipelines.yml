@@ -73,7 +73,8 @@ jobs:
     displayName: Publish artifact $(buildArtifactName)
 
 
-
+# To do, get codecoverage to merge the codecoverage results from each project
+# https://github.com/tonerdo/coverlet/issues/357
 - job: codecoverage
   displayName: 'Code Coverage'
   dependsOn: build
